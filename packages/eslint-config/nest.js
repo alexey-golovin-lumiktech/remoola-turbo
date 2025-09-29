@@ -4,9 +4,6 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 export const nestjsConfig = [
-  {
-    ignores: ['eslint.config.js'],
-  },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   eslintPluginPrettierRecommended,
