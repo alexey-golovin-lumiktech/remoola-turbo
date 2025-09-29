@@ -1,4 +1,4 @@
-import { OpenAPI } from "@remoola/openapi";
+import { OpenAPI } from '@remoola/openapi';
 
 /** Configure the generated client to send cookies (no tokens). */
 export function configureOpenAPI() {

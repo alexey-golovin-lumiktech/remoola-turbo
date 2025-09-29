@@ -1,7 +1,7 @@
 "use client";
-import React from "react";
-import Link from "next/link";
-import { cn } from "../lib/utils";
+import React from 'react';
+import Link from 'next/link';
+import { cn } from '../lib/utils';
 
 export const Badge: React.FC<{ label: string; tone?: `green`|`blue`|`gray`|`red` }> = ({ label, tone=`gray` }) => {
   const m: Record<string,string> = {

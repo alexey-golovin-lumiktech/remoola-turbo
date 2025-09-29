@@ -1,6 +1,8 @@
-import { redirect } from "next/navigation";
-import Sidebar from "./sidebar";
-import { getMeSSR } from "../../lib/server-auth";
+import { redirect } from 'next/navigation';
+import { getMeSSR } from '../../lib/server-auth';
+import Sidebar from './sidebar';
+
+ 
 
 export default async function ShellLayout({ children }: { children: React.ReactNode }) {
   const me = await getMeSSR();

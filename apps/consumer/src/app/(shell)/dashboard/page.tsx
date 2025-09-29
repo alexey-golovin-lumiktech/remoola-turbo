@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { Card, Badge, Progress as ProgressBar } from '@remoola/ui';
-import { getJson } from "../../../lib/api";
+import { getJson } from '../../../lib/api';
 
 type DashboardDto = {
   balance: string; contractsActiveCount: number; lastPaymentAgo: string;

@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { Card, DataTable } from '@remoola/ui';
-import { getJson, patchJson } from "../../lib/api";
+import { getJson, patchJson } from '../../lib/api';
 
 type User = { id: string; email: string; name: string; role: `client`|`admin`|`superadmin` };
 

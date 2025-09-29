@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { Card, DataTable } from '@remoola/ui';
-import { delJson, getJson, patchJson, postJson } from "../../lib/api";
+import { delJson, getJson, patchJson, postJson } from '../../lib/api';
 
 type Contractor = { id: string; name: string; email?: string; phone?: string };
 
