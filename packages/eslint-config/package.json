@@ -4,7 +4,7 @@
   "type": "module",
   "private": true,
   "exports": {
-    "./api": "./api.js",
+    "./nest-js": "./nest.js",
     "./next2": "./next2.js",
     "./base": "./base.js",
     "./next-js": "./next.js",
@@ -14,6 +14,7 @@
     "@eslint/js": "^9.34.0",
     "@next/eslint-plugin-next": "^15.5.0",
     "eslint": "^9.34.0",
+    "eslint-plugin-prettier": "^5.2.2",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-only-warn": "^1.1.0",
     "eslint-plugin-react": "^7.37.5",
