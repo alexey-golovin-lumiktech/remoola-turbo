@@ -1,0 +1,38 @@
+{
+  "$schema": "https://turborepo.com/schema.json",
+  "ui": "tui",
+  "tasks": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "build/**"
+      ]
+    },
+    "start": {
+      "dependsOn": [
+        "build"
+      ]
+    },
+    "lint": {},
+    "openapi": {
+      "dependsOn": [
+        "^build"
+      ],
+      "cache": false,
+      "outputs": [
+        "packages/openapi/src/generated/**"
+      ]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

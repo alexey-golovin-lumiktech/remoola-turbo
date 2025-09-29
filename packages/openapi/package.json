@@ -1,0 +1,21 @@
+{
+  "name": "@remoola/openapi",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "openapi:pull": "mkdir -p src && : ${OPENAPI_URL:=http://127.0.0.1:3333/api-json} && echo \"Fetching $OPENAPI_URL\" && curl -fsSLo src/openapi.json \"$OPENAPI_URL\"",
+    "openapi:gen": "openapi --input src/openapi.json --output src/generated --client fetch --useOptions --useUnionTypes",
+    "openapi": "yarn openapi:pull && yarn openapi:gen",
+    "build": "tsc -p tsconfig.json",
+    "clean": "rimraf dist src/generated src/openapi.json"
+  },
+  "devDependencies": {
+    "openapi-typescript-codegen": "^0.29.0",
+    "typescript": "^5.5.4",
+    "rimraf": "^5.0.5"
+  }
+}
