@@ -20,20 +20,14 @@ export class AuthService {
     private readonly jwt: JwtService,
   ) {}
 
-  async validateUser(email: string, pass: string) {
+  async validateUser(email: string, pass: string, isAdminApp = false) {
     const user = await this.usersRepository
       .createQueryBuilder(`u`)
       .addSelect(`u.passwordHash`)
       .where(`u.email = :email`, { email })
       .getOne();
     if (!user) {
-      await this.usersRepository.save(
-        this.usersRepository.create({
-          email,
-          name: email,
-          passwordHash: await bcrypt.hash(pass, 10),
-        }),
-      );
+      if (!isAdminApp) return this.createClient(email, pass);
       throw new UnauthorizedException(`Invalid credentials`);
     }
     const ok = await bcrypt.compare(pass, user.passwordHash);
@@ -63,5 +57,16 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException(`Invalid refresh`);
     }
+  }
+
+  private async createClient(email: string, pass: string) {
+    return this.usersRepository.save(
+      this.usersRepository.create({
+        email,
+        name: email,
+        passwordHash: await bcrypt.hash(pass, 10),
+        role: `client`,
+      }),
+    );
   }
 }

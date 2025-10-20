@@ -33,21 +33,22 @@ export class AuthController {
   @Post(`login`)
   @HttpCode(200)
   @ApiOkResponse({ type: AuthResponse })
-  async login(@Body() body: Login, @Res({ passthrough: true }) res: express.Response): Promise<AuthResponse> {
+  async login(
+    @Req() req: express.Request,
+    @Body() body: Login,
+    @Res({ passthrough: true }) res: express.Response,
+  ): Promise<AuthResponse> {
     const user = await this.auth.validateUser(body.email, body.password);
     const access = this.auth.signAccess(user);
     const refresh = this.auth.signRefresh(user);
     this.setAuthCookies(res, access, refresh);
-    return { access_token: access };
+    const response = { access_token: access };
+    return response;
   }
 
   @Post(`refresh`)
   @HttpCode(200)
-  refresh(
-    @Req() req: express.Request,
-    @Res({ passthrough: true }) res: express.Response,
-    @Body() body: object,
-  ): AuthResponse {
+  refresh(@Res({ passthrough: true }) res: express.Response, @Body() body: object): AuthResponse {
     const key = `refresh_token` as const;
     const bodyRefreshToken = _.get(body, key);
     const cookies = res.req.get(`cookies`) as Record<string, string> | undefined;

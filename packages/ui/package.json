@@ -9,6 +9,9 @@
     "dist",
     "src/styles.css"
   ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "sideEffects": [
     "src/styles.css"
   ],
