@@ -1,8 +1,8 @@
 import { Controller, Get, Query, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { Request } from 'express';
 
 import { DashboardService } from './dashboard.service';
-import { Request } from 'express';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @ApiBearerAuth(`jwt`)

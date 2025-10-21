@@ -1,16 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth } from '@nestjs/swagger';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, ILike } from 'typeorm';
-import { ApiBearerAuth } from '@nestjs/swagger';
+
 import { JwtAuthGuard } from '../auth/jwt.guard';
-import { RolesGuard } from '../auth/roles.guard';
 import { Roles } from '../auth/roles.decorator';
-import { User } from '../users/user.entity';
+import { RolesGuard } from '../auth/roles.guard';
 import { Contractor } from '../contractors/contractor.entity';
 import { Contract } from '../contracts/contract.entity';
-import { Payment } from '../payments/payment.entity';
 import { Document as Doc } from '../documents/document.entity';
+import { Payment } from '../payments/payment.entity';
 import { IUserRole } from '../shared';
+import { User } from '../users/user.entity';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard, RolesGuard)

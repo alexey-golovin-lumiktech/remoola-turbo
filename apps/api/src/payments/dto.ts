@@ -1,5 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
+
 import { IStartPayment, IUpdatePaymentStatus, IPaymentStatus, IPaymentListItem } from '../shared';
 
 export class StartPayment implements IStartPayment {

@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
 import { Contract } from '../contracts/contract.entity';
 import { PaymentStatuses, PaymentStatus, IPaymentStatus } from '../shared';
 

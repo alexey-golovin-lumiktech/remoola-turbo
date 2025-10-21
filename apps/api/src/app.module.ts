@@ -1,26 +1,27 @@
+import { BullModule } from '@nestjs/bullmq';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { typeormAsyncConfig } from './config/typeorm.config';
-import { BullModule } from '@nestjs/bullmq';
-import { ContractsController } from './contracts/contracts.controller';
-import { ContractsService } from './contracts/contracts.service';
-import { PaymentsController } from './payments/payments.controller';
-import { PaymentsService } from './payments/payments.service';
-import { PaymentsProcessor } from './payments/payments.processor';
-import { DocumentsController } from './documents/documents.controller';
-import { DocumentsService } from './documents/documents.service';
-import { DashboardController } from './dashboard/dashboard.controller';
-import { DashboardService } from './dashboard/dashboard.service';
-import { Contract } from './contracts/contract.entity';
-import { Contractor } from './contractors/contractor.entity';
-import { Document } from './documents/document.entity';
-import { Payment } from './payments/payment.entity';
-import { User } from './users/user.entity';
-import { ComplianceChecklist } from './compliance/compliance.entity';
+
+import { AdminModule } from './admin/admin.module';
 import { AuthModule } from './auth/auth.module';
 import { CookieToAuthMiddleware } from './auth/cookie-to-auth.middleware';
-import { AdminModule } from './admin/admin.module';
+import { ComplianceChecklist } from './compliance/compliance.entity';
+import { typeormAsyncConfig } from './config/typeorm.config';
+import { Contractor } from './contractors/contractor.entity';
+import { Contract } from './contracts/contract.entity';
+import { ContractsController } from './contracts/contracts.controller';
+import { ContractsService } from './contracts/contracts.service';
+import { DashboardController } from './dashboard/dashboard.controller';
+import { DashboardService } from './dashboard/dashboard.service';
+import { Document } from './documents/document.entity';
+import { DocumentsController } from './documents/documents.controller';
+import { DocumentsService } from './documents/documents.service';
+import { Payment } from './payments/payment.entity';
+import { PaymentsController } from './payments/payments.controller';
+import { PaymentsProcessor } from './payments/payments.processor';
+import { PaymentsService } from './payments/payments.service';
+import { User } from './users/user.entity';
 
 @Module({
   imports: [

@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
-import { DocumentsService } from './documents.service';
-import { UploadDocument, PresignedResponse, DocumentListItem } from './dto';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { Request } from 'express';
+import { Body, Controller, Get, Post, Query, Req } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { Request } from 'express';
+
+import { DocumentsService } from './documents.service';
+import { UploadDocument, PresignedResponse, DocumentListItem } from './dto';
 
 @Controller(`documents`)
 export class DocumentsController {

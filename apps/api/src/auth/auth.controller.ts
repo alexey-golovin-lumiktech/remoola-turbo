@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, Res, Get, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
-import * as _ from 'lodash';
 import * as express from 'express';
+import * as _ from 'lodash';
 
 import { AuthService } from './auth.service';
 import { AuthResponse, Login } from './dto/login.dto';

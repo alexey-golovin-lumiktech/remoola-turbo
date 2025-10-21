@@ -1,11 +1,11 @@
-import { Injectable } from '@nestjs/common';
 import { InjectQueue } from '@nestjs/bullmq';
-import { Queue } from 'bullmq';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Queue } from 'bullmq';
 import { Repository } from 'typeorm';
 
-import { Payment } from './payment.entity';
 import { StartPayment, UpdatePaymentStatus } from './dto';
+import { Payment } from './payment.entity';
 import { Contract } from '../contracts/contract.entity';
 import { PaymentStatus } from '../shared';
 import { fmt } from '../utils';

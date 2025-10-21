@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+
 import { Contract } from '../contracts/contract.entity';
 import { UserRoles, UserRole, IUserRole } from '../shared';
 

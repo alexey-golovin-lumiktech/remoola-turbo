@@ -1,12 +1,12 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import * as cookieParser from 'cookie-parser';
-
-import * as express from 'express';
-import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
+import * as cookieParser from 'cookie-parser';
+import * as express from 'express';
+
+import { AppModule } from './app.module';
 
 async function bootstrap() {
   const host = { unset: `[::1]`, local: `localhost`, ip: `127.0.0.1` };

@@ -1,7 +1,8 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModuleAsyncOptions } from '@nestjs/typeorm';
-import { SnakeNamingStrategy } from './naming.strategy';
 import { DataSource } from 'typeorm';
+
+import { SnakeNamingStrategy } from './naming.strategy';
 
 export const typeormConfig = {
   type: `postgres` as const,

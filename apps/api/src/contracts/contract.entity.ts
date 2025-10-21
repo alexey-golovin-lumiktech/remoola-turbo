@@ -8,11 +8,12 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 import { Contractor } from '../contractors/contractor.entity';
+import { Document } from '../documents/document.entity';
 import { Payment } from '../payments/payment.entity';
 import { RateUnit, IRateUnit, ContractStatuses, ContractStatus, IContractStatus } from '../shared';
 import { User } from '../users/user.entity';
-import { Document } from '../documents/document.entity';
 
 @Entity(`contract`)
 export class Contract {

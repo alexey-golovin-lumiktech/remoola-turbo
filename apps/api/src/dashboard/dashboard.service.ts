@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { ComplianceChecklist } from '../compliance/compliance.entity';
 import { Contract } from '../contracts/contract.entity';
 import { ContractsService } from '../contracts/contracts.service';

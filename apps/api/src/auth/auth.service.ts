@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
+import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 
-import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcryptjs';
 import { User } from '../users/user.entity';
 
 interface RefreshTokenPayload {

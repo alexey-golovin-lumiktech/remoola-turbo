@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from '../users/user.entity';
+
+import { AdminController } from './admin.controller';
 import { Contractor } from '../contractors/contractor.entity';
 import { Contract } from '../contracts/contract.entity';
-import { Payment } from '../payments/payment.entity';
 import { Document } from '../documents/document.entity';
-import { AdminController } from './admin.controller';
+import { Payment } from '../payments/payment.entity';
+import { User } from '../users/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Contractor, Contract, Payment, Document])],

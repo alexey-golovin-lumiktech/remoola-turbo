@@ -1,9 +1,10 @@
 import { Processor, WorkerHost } from '@nestjs/bullmq';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Job } from 'bullmq';
 import { Repository } from 'typeorm';
+
 import { Payment } from './payment.entity';
 import { PaymentsService } from './payments.service';
-import { Job } from 'bullmq';
 
 @Processor(`payments`, { concurrency: 3 })
 export class PaymentsProcessor extends WorkerHost {

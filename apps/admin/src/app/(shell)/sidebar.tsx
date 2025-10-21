@@ -1,6 +1,7 @@
 "use client";
-import { SidebarLink } from '@remoola/ui';
 import { usePathname } from 'next/navigation';
+
+import { SidebarLink } from '@remoola/ui';
 
 export default function Sidebar() {
   const path = usePathname();

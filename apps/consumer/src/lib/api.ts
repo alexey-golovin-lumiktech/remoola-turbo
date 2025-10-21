@@ -1,4 +1,3 @@
-
 export const API = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
 async function raw(path: string, init?: RequestInit) {
@@ -18,7 +17,6 @@ async function raw(path: string, init?: RequestInit) {
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
-
 
 export const fetcher = raw;
 
