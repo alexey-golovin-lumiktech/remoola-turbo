@@ -1,6 +1,5 @@
 "use client";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Link from 'next/link';
 import React from 'react';
 
@@ -80,7 +79,7 @@ export function DataTable<T>({
             <tr key={rowKey(r)} className="border-t border-gray-100">
               {columns.map(c => (
                 <td key={String(c.key)} className="px-3 py-3">
-                  {c.render ? c.render(r) : (r as any)[c.key]}
+                  {c.render ? c.render(r) : (r as never)[c.key]}
                 </td>
               ))}
             </tr>

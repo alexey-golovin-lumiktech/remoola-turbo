@@ -1,4 +1,12 @@
-import { nestjsConfig } from '@remoola/eslint-config/nest-js';
-import { defineConfig } from 'eslint/config';
+import { nestjsConfig } from "@remoola/eslint-config/nest-js";
 
-export default defineConfig(...nestjsConfig);
+export default [
+  ...nestjsConfig,
+  {
+    settings: {
+      "import/resolver": {
+        typescript: { project: "./tsconfig.json" },
+      },
+    },
+  },
+];

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 
 export type Column<T> = {
@@ -31,8 +30,8 @@ export function DataTable<T>({
           {rows.map((r, i) => (
             <tr key={rowKey(r, i)}>
               {columns.map((c) => (
-                <td key={String(c.key)} className={(c as any).tdClassName || ``}>
-                  {c.render ? c.render(r) : (r as any)[c.key]}
+                <td key={String(c.key)} className={(c as never)[`tdClassName`] || ``}>
+                  {c.render ? c.render(r) : (r as never)[c.key]}
                 </td>
               ))}
             </tr>
