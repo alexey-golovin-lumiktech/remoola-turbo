@@ -80,5 +80,8 @@
   "files.exclude": {
     "**/.turbo": true,
     "**/.DS_Store": true
+  },
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   }
 }

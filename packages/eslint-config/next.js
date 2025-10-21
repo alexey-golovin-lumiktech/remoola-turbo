@@ -27,6 +27,7 @@ export const nextJsConfig = [
       "@next/next": pluginNext,
       import: importPlugin,
     },
+    settings: { react: { version: "detect" } }, // 👈 already here — just confirm it’s not removed
     rules: {
       ...pluginNext.configs.recommended.rules,
       ...pluginNext.configs["core-web-vitals"].rules,

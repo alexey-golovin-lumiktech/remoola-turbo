@@ -67,14 +67,18 @@ export const nestjsConfig = [
       "prettier/prettier": [
         "error",
         {
-          trailingComma: "all",
-          singleQuote: true,
-          tabWidth: 2,
-          endOfLine: "auto",
-          printWidth: 120,
+          $schema: "https://json.schemastore.org/prettierrc",
           semi: true,
+          singleQuote: true,
+          trailingComma: "all",
+          printWidth: 120,
+          tabWidth: 2,
           arrowParens: "always",
+          bracketSpacing: true,
+          endOfLine: "lf",
           proseWrap: "preserve",
+          quoteProps: "as-needed",
+          jsxSingleQuote: false
         },
       ],
     },
