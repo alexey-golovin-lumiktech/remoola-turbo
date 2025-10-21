@@ -28,7 +28,7 @@ import { User } from './users/user.entity';
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync(typeormAsyncConfig),
     TypeOrmModule.forFeature([User, Contractor, Contract, Payment, Document, ComplianceChecklist]),
-    BullModule.forRoot({ connection: { url: process.env.REDIS_URL! } }),
+    BullModule.forRoot({ connection: { url: process.env.REDIS_URL } }),
     BullModule.registerQueue({ name: `payments` }),
     AuthModule,
     AdminModule,

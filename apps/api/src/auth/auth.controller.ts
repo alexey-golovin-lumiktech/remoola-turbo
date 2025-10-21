@@ -51,7 +51,7 @@ export class AuthController {
   refresh(@Res({ passthrough: true }) res: express.Response, @Body() body: object): AuthResponse {
     const key = `refresh_token` as const;
     const bodyRefreshToken = _.get(body, key);
-    const cookies = res.req.get(`cookies`) as Record<string, string> | undefined;
+    const cookies = res.req.get(`cookies`) as unknown as Record<string, string> | undefined;
     const resReqCookiesRefreshToken: string | null = cookies?.[key] ?? null;
 
     const rt = bodyRefreshToken || resReqCookiesRefreshToken;

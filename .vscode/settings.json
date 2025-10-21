@@ -42,8 +42,8 @@
   // 💾 --- Auto Fix + Formatting ---
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
-    "source.fixAll": true,
-    "source.fixAll.eslint": true
+    "source.fixAll": "always",
+    "source.fixAll.eslint": "always"
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   // 🎨 --- Prettier/Formatting Sync ---

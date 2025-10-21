@@ -39,20 +39,20 @@ export class AuthService {
     return this.jwt.sign(
       { sub: user.id, email: user.email, role: user.role },
       {
-        secret: process.env.JWT_SECRET!,
+        secret: process.env.JWT_SECRET,
         expiresIn: process.env.JWT_ACCESS_TTL || `15m`,
       },
     );
   }
 
   signRefresh(user: Pick<User, `id`>) {
-    const secret = process.env.JWT_REFRESH_SECRET! || process.env.JWT_SECRET!;
+    const secret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
     return this.jwt.sign({ sub: user.id, typ: `refresh` }, { secret, expiresIn: process.env.JWT_REFRESH_TTL || `7d` });
   }
 
   verifyRefresh(token: string): RefreshTokenPayload {
     try {
-      const secret = process.env.JWT_REFRESH_SECRET! || process.env.JWT_SECRET!;
+      const secret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
       return this.jwt.verify(token, { secret });
     } catch {
       throw new UnauthorizedException(`Invalid refresh`);

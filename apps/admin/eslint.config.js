@@ -1,9 +1,10 @@
-import { nextJsConfig } from '@remoola/eslint-config/next-js';
+import { nextJsConfig } from "@remoola/eslint-config/next-js";
 
 export default [
-  ...nextJsConfig, {
+  ...nextJsConfig,
+  {
     settings: {
-      react: { version: `detect` },
+      react: { version: `detect` }
     },
   },
 ];

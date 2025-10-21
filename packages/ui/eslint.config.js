@@ -1,3 +1,11 @@
-import { config } from "@remoola/eslint-config/react-internal";
+// packages/ui/eslint.config.js
+import { config as reactInternalConfig } from "@remoola/eslint-config/react-internal";
 
-export default config;
+export default [
+  ...reactInternalConfig,
+  {
+    settings: {
+      react: { version: `detect` },
+    },
+  },
+];

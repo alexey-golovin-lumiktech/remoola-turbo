@@ -6,12 +6,12 @@ import { SnakeNamingStrategy } from './naming.strategy';
 
 export const typeormConfig = {
   type: `postgres` as const,
-  url: process.env.DATABASE_URL!,
-  ssl: process.env.DB_SSL! === `true` ? { rejectUnauthorized: false } : false,
+  url: process.env.DATABASE_URL,
+  ssl: process.env.DB_SSL === `true` ? { rejectUnauthorized: false } : false,
   autoLoadEntities: true,
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
-  password: process.env.POSTGRES_PASSWORD!,
+  password: process.env.POSTGRES_PASSWORD,
   migrations: [__dirname + `/../migrations/*.{ts,js}`],
 };
 

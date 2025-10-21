@@ -3,7 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import * as cookieParser from 'cookie-parser';
+import { default as cookieParser } from 'cookie-parser';
 import * as express from 'express';
 
 import { AppModule } from './app.module';
@@ -47,7 +47,7 @@ async function bootstrap() {
     .build();
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(`docs`, app, doc);
-  app.getHttpAdapter().get(`/api-json`, (_req, res: express.Response) => res.send(doc));
+  app.use(`/api-json`, (_req, res: express.Response) => res.send(doc));
 
   await app
     .listen(process.env.PORT ?? port.backend, process.env.HOST ?? host.ip)
