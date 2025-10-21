@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
+
 import { Card, DataTable } from '@remoola/ui';
+
 import { getJson, patchJson } from '../../lib/api';
 
 type User = { id: string; email: string; name: string; role: `client`|`admin`|`superadmin` };
@@ -12,7 +14,7 @@ export default function UsersPage() {
     const data = await getJson<User[]>(`/admin/users${q ? `?q=${encodeURIComponent(q)}` : ``}`);
     setRows(data);
   }
-  useEffect(() => { load(); }, [q]);// eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { load(); }, [q]);
 
   return (
     <>

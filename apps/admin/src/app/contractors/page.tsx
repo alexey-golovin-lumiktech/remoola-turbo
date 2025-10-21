@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
+
 import { Card, DataTable } from '@remoola/ui';
+
 import { delJson, getJson, patchJson, postJson } from '../../lib/api';
 
 type Contractor = { id: string; name: string; email?: string; phone?: string };
@@ -11,7 +13,7 @@ export default function ContractorsPage(){
   const [name,setName]=useState(``);
 
   const load = async () => setRows(await getJson<Contractor[]>(`/admin/contractors${query?`?q=${encodeURIComponent(query)}`:``}`));
-  useEffect(()=>{ load(); },[query]);// eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(()=>{ load(); },[query]);
 
   return (
     <>

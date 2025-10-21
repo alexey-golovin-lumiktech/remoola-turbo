@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
+
 import { Card, Badge } from '@remoola/ui';
+
 import { getJson, postJson, putJson } from '../../../lib/api';
 
 type Row = { id:string; contractorId:string;  contractorName:string; rate:string; status:string; lastActivityAgo:string; };
@@ -10,13 +12,12 @@ export default function ContractsPage(){
   const load = () => getJson<Row[]>(`/contracts`).then(setRows).catch(()=>{});
   useEffect(() => void load(), []);
 
-
   return <>
     <h1 className="text-3xl font-bold tracking-tight text-gray-900">Contracts</h1>
     <p className="mt-1 text-sm text-gray-600">Manage contractor agreements and signatures.</p>
 
     <section className="mt-5">
-      <Card actions={<button onClick={async()=>{ 
+      <Card actions={<button onClick={async()=>{
         // demo create: choose real contractorId in your UI
         await postJson(`/contracts`, { contractorId: rows[0]?.contractorId , rateCents: 8000, rateUnit: `hour`, some:2222222222 });
         load();
