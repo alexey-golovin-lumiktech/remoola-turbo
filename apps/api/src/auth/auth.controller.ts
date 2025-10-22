@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { AuthService } from './auth.service';
 import { AuthResponse, Login } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt.guard';
-import { UserRole } from '../shared';
+import { errors, UserRole } from '../shared';
 
 @Controller(`auth`)
 export class AuthController {
@@ -50,10 +50,10 @@ export class AuthController {
     const cookies = res.req.get(`cookies`) as unknown as Record<string, string> | undefined;
     const resReqCookiesRefreshToken: string | null = cookies?.[key] ?? null;
 
-    const rt = bodyRefreshToken || resReqCookiesRefreshToken;
-    if (!rt) throw new Error(`No refresh token`);
+    const refreshToken = bodyRefreshToken || resReqCookiesRefreshToken;
+    if (!refreshToken) throw new Error(errors.NO_REFRESH_TOKEN.message);
 
-    const payload = this.auth.verifyRefresh(rt);
+    const payload = this.auth.verifyRefresh(refreshToken);
     const fakeUser = { id: payload.sub, email: ``, role: UserRole.CLIENT };
 
     const access = this.auth.signAccess(fakeUser);

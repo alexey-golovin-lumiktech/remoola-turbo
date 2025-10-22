@@ -1,6 +1,6 @@
 import { Column, Entity, OneToMany } from 'typeorm';
 
-import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
+import { AbstractBaseAuditColumns } from '../common';
 import { Contract } from '../contracts/contract.entity';
 
 @Entity(`contractor`)

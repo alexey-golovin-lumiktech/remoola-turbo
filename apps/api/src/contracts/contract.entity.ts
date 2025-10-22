@@ -1,6 +1,6 @@
 import { Column, Entity, Index, ManyToOne, OneToMany } from 'typeorm';
 
-import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
+import { AbstractBaseAuditColumns } from '../common';
 import { Contractor } from '../contractors/contractor.entity';
 import { Document } from '../documents/document.entity';
 import { Payment } from '../payments/payment.entity';

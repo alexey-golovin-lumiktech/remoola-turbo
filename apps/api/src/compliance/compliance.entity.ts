@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
 
-import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
+import { AbstractBaseAuditColumns } from '../common';
 import { User } from '../users/user.entity';
 
 @Entity(`compliance_checklist`)

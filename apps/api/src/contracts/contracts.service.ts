@@ -5,7 +5,7 @@ import { ILike, Repository } from 'typeorm';
 import { Contract } from './contract.entity';
 import { CreateContract, UpdateContract, ContractListItem } from './dto';
 import { Contractor } from '../contractors/contractor.entity';
-import { ContractStatus } from '../shared';
+import { ContractStatus, errors } from '../shared';
 import { User } from '../users/user.entity';
 import { money, ago } from '../utils';
 
@@ -51,7 +51,7 @@ export class ContractsService {
       return this.contracts.save(contract);
     } catch (error) {
       this.logger.debug(String(error));
-      throw new InternalServerErrorException({ message: `Something went wrong for create contract` });
+      throw new InternalServerErrorException(errors.FAIL_CREATE_CONTRACT);
     }
   }
 

@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { RequestHandler } from '@nestjs/common/interfaces';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
@@ -8,6 +8,8 @@ import { default as cookieParser } from 'cookie-parser';
 import * as express from 'express';
 
 import { AppModule } from './app.module';
+import { TransformResponseInterceptor, validationPipeOpts } from './common';
+import { GlobalExceptionFilter } from './common/filters';
 
 async function bootstrap() {
   const host = { unset: `[::1]`, local: `localhost`, ip: `127.0.0.1` };
@@ -39,6 +41,10 @@ async function bootstrap() {
       },
     }),
   );
+
+  app.useGlobalFilters(new GlobalExceptionFilter());
+  app.useGlobalInterceptors(new TransformResponseInterceptor(app.get(Reflector)));
+  app.useGlobalPipes(new ValidationPipe(validationPipeOpts));
 
   const config = new DocumentBuilder()
     .setTitle(`Remoola API`)

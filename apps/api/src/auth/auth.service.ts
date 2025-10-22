@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 
+import { errors } from '../shared';
 import { User } from '../users/user.entity';
 
 interface RefreshTokenPayload {
@@ -28,10 +29,10 @@ export class AuthService {
       .getOne();
     if (!user) {
       if (!isAdminApp) return this.createClient(email, pass);
-      throw new UnauthorizedException(`Invalid credentials`);
+      throw new UnauthorizedException(errors.INVALID_CREDENTIALS);
     }
     const ok = await bcrypt.compare(pass, user.passwordHash);
-    if (!ok) throw new UnauthorizedException(`Invalid credentials`);
+    if (!ok) throw new UnauthorizedException(errors.INVALID_CREDENTIALS);
     return user;
   }
 
