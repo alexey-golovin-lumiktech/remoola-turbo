@@ -12,10 +12,5 @@ export async function getClientSSR(clientId: string) {
     cache: `no-store`,
   });
 
-  if (!res.ok) {
-    console.log(`await res.text()`, await res.text());
-    return null;
-  }
-
-  return res.json();
+  return res.ok ? res.json() : null;
 }

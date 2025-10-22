@@ -47,7 +47,7 @@ export default function ClientsPage() {
                   <select
                     className="rounded border px-2 py-1 text-sm"
                     value={u.role}
-                    onChange={(e) => patchJson(`/admins/clients/${u.id}/role`, { role: e.target.value }).then(load)}
+                    onChange={(e) => patchJson(`/admin/users/${u.id}/role`, { role: e.target.value }).then(load)}
                   >
                     <option value="client">client</option>
                     <option value="admin">admin</option>

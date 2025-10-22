@@ -31,13 +31,13 @@ export class AdminController {
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Get(`admins`)
+  @Get()
   searchAdmins(@Query(`search`) search?: string) {
     return this.adminsService.searchAdmins(search);
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Get(`admins/:adminId`)
+  @Get(`:adminId`)
   getAdminById(@Param(`adminId`) adminId: string) {
     return this.adminsService.getAdminById(adminId);
   }

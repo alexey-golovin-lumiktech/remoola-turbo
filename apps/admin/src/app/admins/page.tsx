@@ -12,7 +12,7 @@ export default function AdminsPage() {
   const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admin/admins${search ? `?search=${encodeURIComponent(search)}` : ``}`);
+    const data = await getJson<User[]>(`/admin${search ? `?search=${encodeURIComponent(search)}` : ``}`);
     setRows(data);
   };
 
@@ -47,8 +47,9 @@ export default function AdminsPage() {
                   <select
                     className="rounded border px-2 py-1 text-sm"
                     value={u.role}
-                    onChange={(e) => patchJson(`/admin/admins/${u.id}/role`, { role: e.target.value }).then(load)}
+                    onChange={(e) => patchJson(`/admin/users/${u.id}/role`, { role: e.target.value }).then(load)}
                   >
+                    <option value="client">client</option>
                     <option value="admin">admin</option>
                     <option value="superadmin">superadmin</option>
                   </select>
