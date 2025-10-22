@@ -22,16 +22,17 @@ import { IUserRole, UserRole } from '../shared';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Roles(UserRole.SUPERADMIN)
 @Controller(`admins`)
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 
+  @Roles(UserRole.SUPERADMIN)
   @Get(`admins`)
   listAdmins(@Query(`q`) query?: string) {
     return this.adminsService.listAdmins(query);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`clients`)
   listClients(@Query(`q`) query?: string) {
     return this.adminsService.listClients(query);
@@ -42,61 +43,73 @@ export class AdminsController {
     throw new ForbiddenException(`this route deprecated`);
   }
 
+  @Roles(UserRole.SUPERADMIN)
   @Patch(`users/:id/role`)
   setRole(@Param(`id`) id: string, @Body() body: { role: IUserRole }) {
     return this.adminsService.setRole(id, body);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`contractors`)
   listContractors(@Query(`q`) query?: string) {
     return this.adminsService.listContractors(query);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Post(`contractors`)
   createContractor(@Body() body: { name: string; email?: string; phone?: string }) {
     return this.adminsService.createContractor(body);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Patch(`contractors/:id`)
   updateContractor(@Param(`id`) id: string, @Body() body: Partial<Contractor>) {
     return this.adminsService.updateContractor(id, body);
   }
 
+  @Roles(UserRole.SUPERADMIN)
   @Delete(`contractors/:id`)
   deleteContractor(@Param(`id`) id: string) {
     return this.adminsService.deleteContractor(id);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`contracts`)
   listContracts() {
     return this.adminsService.listContracts();
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Patch(`contracts/:id`)
   updateContract(@Param(`id`) id: string, @Body() body: Partial<Contract>) {
     return this.adminsService.updateContract(id, body);
   }
 
+  @Roles(UserRole.SUPERADMIN)
   @Delete(`contracts/:id`)
   deleteContract(@Param(`id`) id: string) {
     return this.adminsService.deleteContract(id);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`payments`)
   listPayments() {
     return this.adminsService.listPayments();
   }
 
+  @Roles(UserRole.SUPERADMIN)
   @Delete(`payments/:id`)
   deletePayment(@Param(`id`) id: string) {
     return this.adminsService.deletePayment(id);
   }
 
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`documents`)
   listDocuments(@Query(`q`) query?: string) {
     return this.adminsService.listDocuments(query);
   }
 
+  @Roles(UserRole.SUPERADMIN)
   @Delete(`documents/:id`)
   deleteDocument(@Param(`id`) id: string) {
     return this.adminsService.deleteDocument(id);

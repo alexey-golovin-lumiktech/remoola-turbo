@@ -71,7 +71,7 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       }
     }
 
-    this.logger.error(exception);
+    this.logger.error(`[${exceptionStatus}] ${request.method} ${request.url} → ${error.msg}`);
 
     return response.status(exceptionStatus).json(error);
   }
