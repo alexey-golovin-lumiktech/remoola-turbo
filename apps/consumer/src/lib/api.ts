@@ -9,7 +9,7 @@ async function raw(path: string, init?: RequestInit) {
     });
 
   let res = await doFetch();
-  if (res.status === 401) {
+  if (res.status ==401) {
     const rr = await fetch(API + `/auth/refresh`, { method: `POST`, credentials: `include` });
     if (rr.ok) res = await doFetch();
   }

@@ -34,9 +34,9 @@ export default function PaymentsPage(){
                   <td className="py-3 pr-4 text-gray-700">{p.amount}</td>
                   <td className="py-3 pr-4 text-gray-700">{p.method}</td>
                   <td className="py-3 pr-4">
-                    {p.status === `Completed` && <Badge tone="green" label="Completed" />}
-                    {p.status === `Pending`   && <Badge tone="blue"  label="Pending" />}
-                    {p.status === `Failed`    && <Badge tone="red"   label="Failed" />}
+                    {p.status ==`Completed` && <Badge tone="green" label="Completed" />}
+                    {p.status ==`Pending`   && <Badge tone="blue"  label="Pending" />}
+                    {p.status ==`Failed`    && <Badge tone="red"   label="Failed" />}
                   </td>
                   <td className="py-3 text-gray-600">{p.date}</td>
                 </tr>

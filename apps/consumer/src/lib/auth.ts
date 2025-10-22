@@ -1,6 +1,6 @@
 'use client';
 export function getToken() {
-  if (typeof window === `undefined`) return undefined;
+  if (typeof window ==`undefined`) return undefined;
   return localStorage.getItem(`token`) ?? undefined;
 }
 

@@ -14,7 +14,7 @@ const exceptionFactory: ValidationPipeOptions[`exceptionFactory`] = (validationE
     statusText,
   };
   const errorsReducer = (acc: typeof collector, ctx: ValidationError) => {
-    if (ctx.children.length !== 0) {
+    if (ctx.children.length != 0) {
       return ctx.children.reduce(errorsReducer, collector);
     }
     acc.errors = {

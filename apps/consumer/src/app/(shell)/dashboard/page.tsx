@@ -55,7 +55,7 @@ export default function DashboardPage(){
                   <tr key={c.id} className="border-t border-gray-100">
                     <td className="py-3 pr-4 font-medium text-gray-900">{c.contractorName}</td>
                     <td className="py-3 pr-4 text-gray-700">{c.rate}</td>
-                    <td className="py-3 pr-4">{c.status === `Active` ? <Badge label="Active" tone="green"/> : <Badge label="Signature" tone="blue"/>}</td>
+                    <td className="py-3 pr-4">{c.status ==`Active` ? <Badge label="Active" tone="green"/> : <Badge label="Signature" tone="blue"/>}</td>
                     <td className="py-3 text-gray-600">{c.lastActivityAgo}</td>
                   </tr>
                 ))}

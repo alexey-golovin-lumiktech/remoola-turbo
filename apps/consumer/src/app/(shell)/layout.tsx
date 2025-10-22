@@ -14,7 +14,7 @@ export default function ShellLayout({ children }: { children: React.ReactNode })
           <div className="h-8 w-8 rounded-xl bg-white/20" /><span className="text-lg font-bold tracking-tight">Remoola</span>
         </div>
           <nav className="mt-6 space-y-1">
-          <SidebarLink href="/dashboard"  active={pathname === `/` || pathname.startsWith(`/dashboard`)}>
+          <SidebarLink href="/dashboard"  active={pathname ==`/` || pathname.startsWith(`/dashboard`)}>
             Dashboard
           </SidebarLink>
           <SidebarLink href="/contracts"  active={pathname.startsWith(`/contracts`)}>

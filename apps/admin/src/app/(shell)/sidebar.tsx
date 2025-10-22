@@ -12,7 +12,7 @@ export default function Sidebar() {
         <span className="text-lg font-bold tracking-tight">Admin</span>
       </div>
       <nav className="mt-6 space-y-1">
-        <SidebarLink href="/"           active={path === `/`}>Dashboard</SidebarLink>
+        <SidebarLink href="/"           active={path ==`/`}>Dashboard</SidebarLink>
         <SidebarLink href="/users"      active={path.startsWith(`/users`)}>Users</SidebarLink>
         <SidebarLink href="/contractors"active={path.startsWith(`/contractors`)}>Contractors</SidebarLink>
         <SidebarLink href="/contracts"  active={path.startsWith(`/contracts`)}>Contracts</SidebarLink>

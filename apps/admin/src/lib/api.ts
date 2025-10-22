@@ -10,7 +10,7 @@ async function doFetch(path: string, init?: RequestInit) {
 
 export async function raw(path: string, init?: RequestInit) {
   let res = await doFetch(path, init);
-  if (res.status === 401) {
+  if (res.status ==401) {
     const rr = await doFetch(`/auth/refresh`, { method: `POST` });
     if (rr.ok) res = await doFetch(path, init);
   }
@@ -18,8 +18,13 @@ export async function raw(path: string, init?: RequestInit) {
   const text = await res.text();
   return text ? JSON.parse(text) : null;
 }
+
 export const getJson = <T,>(p: string) => raw(p) as Promise<T>;
+
 export const postJson = <T,>(p: string, body: unknown) => raw(p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
+
 export const patchJson = <T,>(p: string, body: unknown) => raw(p, { method: `PATCH`, body: JSON.stringify(body) }) as Promise<T>;
+
 export const putJson = <T,>(p: string, body: unknown) => raw(p, { method: `PUT`, body: JSON.stringify(body) }) as Promise<T>;
+
 export const delJson = <T,>(p: string) => raw(p, { method: `DELETE` }) as Promise<T>;

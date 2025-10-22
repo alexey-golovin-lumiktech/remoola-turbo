@@ -9,7 +9,7 @@ type Contract = { id:string; rateCents:number; rateUnit:`hour`|`fixed`; status:s
 
 export default function ContractsPage(){
   const [rows,setRows]=useState<Contract[]>([]);
-  const load = async () => setRows(await getJson<Contract[]>(`/admin/contracts`));
+  const load = async () => setRows(await getJson<Contract[]>(`/admins/contracts`));
   useEffect(()=>{ load(); },[]);
 
   return (
@@ -30,13 +30,13 @@ export default function ContractsPage(){
               { key: `actions`,    header: `Actions`,    render:(r)=>(
                 <div className="flex items-center gap-2">
                   <select className="rounded border px-2 py-1 text-xs" defaultValue={r.status}
-                          onChange={(e)=>patchJson(`/admin/contracts/${r.id}`, { status: e.target.value }).then(load)}>
+                          onChange={(e)=>patchJson(`/admins/contracts/${r.id}`, { status: e.target.value }).then(load)}>
                     <option value="draft">draft</option>
                     <option value="signature">signature</option>
                     <option value="active">active</option>
                     <option value="archived">archived</option>
                   </select>
-                  <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admin/contracts/${r.id}`).then(load)}>Delete</button>
+                  <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admins/contracts/${r.id}`).then(load)}>Delete</button>
                 </div>
               )},
             ]}

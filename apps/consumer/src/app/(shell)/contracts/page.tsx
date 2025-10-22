@@ -30,7 +30,7 @@ export default function ContractsPage(){
                 <tr key={c.id} className="border-t border-gray-100">
                   <td className="py-3 pr-4 font-medium text-gray-900">{c.contractorName}</td>
                   <td className="py-3 pr-4 text-gray-700">{c.rate}</td>
-                  <td className="py-3 pr-4">{c.status === `Active` ? <Badge label="Active" tone="green"/> : <Badge label={c.status} tone="blue"/>}</td>
+                  <td className="py-3 pr-4">{c.status ==`Active` ? <Badge label="Active" tone="green"/> : <Badge label={c.status} tone="blue"/>}</td>
                   <td className="py-3 pr-4 text-gray-600">{c.lastActivityAgo}</td>
                   <td className="py-3"><div className="flex items-center gap-2">
                     <button className="rounded-lg border border-gray-200 px-2 py-1 text-xs" onClick={async()=>{ await putJson(`/contracts/${c.id}`, { status: `active` }); load(); }}>Activate</button>

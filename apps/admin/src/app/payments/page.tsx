@@ -9,7 +9,7 @@ type Pay = { id:string; amountCents:number; status:`Pending`|`Completed`|`Failed
 
 export default function PaymentsPage(){
   const [rows,setRows]=useState<Pay[]>([]);
-  const load = async () => setRows(await getJson<Pay[]>(`/admin/payments`));
+  const load = async () => setRows(await getJson<Pay[]>(`/admins/payments`));
   useEffect(()=>{ load(); },[]);
 
   return (
@@ -30,7 +30,7 @@ export default function PaymentsPage(){
                 <Badge label={p.status} tone={p.status===`Completed`?`green`:p.status===`Pending`?`blue`:`red`} />
               )},
               { key: `actions`, header: `Actions`, render:(p)=>(
-                <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admin/payments/${p.id}`).then(load)}>Delete</button>
+                <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admins/payments/${p.id}`).then(load)}>Delete</button>
               )},
             ]}
           />

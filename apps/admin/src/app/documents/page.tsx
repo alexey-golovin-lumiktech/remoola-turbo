@@ -9,7 +9,7 @@ type Doc = { id:string; name:string; type:string; sizeBytes?:number; updatedAt?:
 
 export default function DocumentsPage(){
   const [rows,setRows]=useState<Doc[]>([]);
-  const load = async () => setRows(await getJson<Doc[]>(`/admin/documents`));
+  const load = async () => setRows(await getJson<Doc[]>(`/admins/documents`));
   useEffect(()=>{ load(); },[]);
 
   return (
@@ -28,7 +28,7 @@ export default function DocumentsPage(){
               { key: `size`, header: `Size`, render:(d)=>d.sizeBytes ? `${(d.sizeBytes/1024).toFixed(0)} KB` : `—` },
               { key: `updated`, header: `Updated`, render:(d)=>d.updatedAt ? new Date(d.updatedAt).toLocaleString() : `—` },
               { key: `actions`, header: `Actions`, render:(d)=>(
-                <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admin/documents/${d.id}`).then(load)}>Delete</button>
+                <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admins/documents/${d.id}`).then(load)}>Delete</button>
               )},
             ]}
           />

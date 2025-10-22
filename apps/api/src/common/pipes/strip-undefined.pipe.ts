@@ -1,7 +1,7 @@
 import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
-  return typeof v == `object` && v !== null && v.constructor == Object;
+  return typeof v == `object` && v != null && v.constructor == Object;
 }
 
 function stripUndefined<T>(value: T): T {
@@ -11,7 +11,7 @@ function stripUndefined<T>(value: T): T {
   if (isPlainObject(value)) {
     const out: Record<string, unknown> = {};
     for (const [k, v] of Object.entries(value)) {
-      if (v !== undefined) out[k] = stripUndefined(v);
+      if (v != undefined) out[k] = stripUndefined(v);
     }
     return out as T;
   }
