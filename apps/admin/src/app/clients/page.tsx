@@ -7,22 +7,20 @@ import { getJson, patchJson } from "../../lib/api";
 
 type User = { id: string; email: string; name: string; role: `client` | `admin` | `superadmin` };
 
-export default function UsersPage() {
+export default function ClientsPage() {
   const [rows, setRows] = useState<User[]>([]);
   const [q, setQ] = useState(``);
-
   async function load() {
-    const data = await getJson<User[]>(`/admins/users${q ? `?q=${encodeURIComponent(q)}` : ``}`);
+    const data = await getJson<User[]>(`/admins/clients${q ? `?q=${encodeURIComponent(q)}` : ``}`);
     setRows(data);
   }
-
   useEffect(() => {
     load();
   }, [q]);
 
   return (
     <>
-      <h1 className="text-3xl font-bold tracking-tight">Users</h1>
+      <h1 className="text-3xl font-bold tracking-tight">Clients</h1>
       <p className="mt-1 text-sm text-gray-600">Promote admins, manage access.</p>
 
       <section className="mt-4">
@@ -49,7 +47,7 @@ export default function UsersPage() {
                   <select
                     className="rounded border px-2 py-1 text-sm"
                     value={u.role}
-                    onChange={(e) => patchJson(`/admins/users/${u.id}/role`, { role: e.target.value }).then(load)}
+                    onChange={(e) => patchJson(`/admins/clients/${u.id}/role`, { role: e.target.value }).then(load)}
                   >
                     <option value="client">client</option>
                     <option value="admin">admin</option>

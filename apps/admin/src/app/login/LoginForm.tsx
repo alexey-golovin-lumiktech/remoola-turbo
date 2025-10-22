@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function LoginForm({ nextPath }: { nextPath: string }) {
   const [email, setEmail] = useState(`admin@example.com`);
@@ -12,14 +12,14 @@ export default function LoginForm({ nextPath }: { nextPath: string }) {
     setErr(undefined);
 
     const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
-    const r = await fetch(`${base}/auth/login`, {
+    const response = await fetch(`${base}/auth/login`, {
       method: `POST`,
       credentials: `include`,
       headers: { "Content-Type": `application/json` },
       body: JSON.stringify({ email, password }),
     });
-    if (!r.ok) {
-      setErr(`Login failed (${r.status})`);
+    if (!response.ok) {
+      setErr(`Login failed (${response.status})`);
       return;
     }
 

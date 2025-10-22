@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 
 const PROTECTED = [
   `/`,
+  `/admins`,
+  `/clients`,
   `/users`,
   `/contractors`,
   `/contracts`,

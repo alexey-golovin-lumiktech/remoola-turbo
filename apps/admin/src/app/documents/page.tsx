@@ -1,16 +1,20 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { Card, DataTable } from '@remoola/ui';
+import { Card, DataTable } from "@remoola/ui";
 
-import { getJson, delJson } from '../../lib/api';
+import { getJson, delJson } from "../../lib/api";
 
-type Doc = { id:string; name:string; type:string; sizeBytes?:number; updatedAt?:string; fileUrl?:string };
+type Doc = { id: string; name: string; type: string; sizeBytes?: number; updatedAt?: string; fileUrl?: string };
 
-export default function DocumentsPage(){
-  const [rows,setRows]=useState<Doc[]>([]);
+export default function DocumentsPage() {
+  const [rows, setRows] = useState<Doc[]>([]);
+
   const load = async () => setRows(await getJson<Doc[]>(`/admins/documents`));
-  useEffect(()=>{ load(); },[]);
+
+  useEffect(() => {
+    load();
+  }, []);
 
   return (
     <>
@@ -21,15 +25,40 @@ export default function DocumentsPage(){
         <Card>
           <DataTable<Doc>
             rows={rows}
-            rowKey={(r)=>r.id}
+            rowKey={(r) => r.id}
             columns={[
-              { key: `name`, header: `Name`, render:(d)=>(<a className="hover:underline" href={d.fileUrl||`#`}>{d.name}</a>) },
-              { key: `type`, header: `Type`, render:(d)=>d.type?.toUpperCase() || `—` },
-              { key: `size`, header: `Size`, render:(d)=>d.sizeBytes ? `${(d.sizeBytes/1024).toFixed(0)} KB` : `—` },
-              { key: `updated`, header: `Updated`, render:(d)=>d.updatedAt ? new Date(d.updatedAt).toLocaleString() : `—` },
-              { key: `actions`, header: `Actions`, render:(d)=>(
-                <button className="rounded border px-2 py-1 text-xs" onClick={()=>delJson(`/admins/documents/${d.id}`).then(load)}>Delete</button>
-              )},
+              {
+                key: `name`,
+                header: `Name`,
+                render: (d) => (
+                  <a className="hover:underline" href={d.fileUrl || `#`}>
+                    {d.name}
+                  </a>
+                ),
+              },
+              { key: `type`, header: `Type`, render: (d) => d.type?.toUpperCase() || `—` },
+              {
+                key: `size`,
+                header: `Size`,
+                render: (d) => (d.sizeBytes ? `${(d.sizeBytes / 1024).toFixed(0)} KB` : `—`),
+              },
+              {
+                key: `updated`,
+                header: `Updated`,
+                render: (d) => (d.updatedAt ? new Date(d.updatedAt).toLocaleString() : `—`),
+              },
+              {
+                key: `actions`,
+                header: `Actions`,
+                render: (d) => (
+                  <button
+                    className="rounded border px-2 py-1 text-xs"
+                    onClick={() => delJson(`/admins/documents/${d.id}`).then(load)}
+                  >
+                    Delete
+                  </button>
+                ),
+              },
             ]}
           />
         </Card>

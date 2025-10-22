@@ -1,6 +1,6 @@
-import { Card, Badge, Progress } from '@remoola/ui';
+import { Card, Badge, Progress } from "@remoola/ui";
 
-import Shell from './(shell)/layout';
+import Shell from "./(shell)/layout";
 
 export default async function AdminDashboard() {
   return (
@@ -9,27 +9,27 @@ export default async function AdminDashboard() {
       <p className="mt-1 text-sm text-gray-600">Monitor system health, compliance, and activity across tenants.</p>
 
       {/* Stat cards */}
-<section className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-  <Card>
-    <p className="muted text-sm">Active Clients</p>
-    <p className="stat-number mt-2">128</p>
-  </Card>
-  <Card>
-    <p className="muted text-sm">Contracts</p>
-    <p className="stat-number mt-2">1,942</p>
-  </Card>
-  <Card>
-    <p className="muted text-sm">Payments (30d)</p>
-    <p className="stat-number mt-2">$482,120</p>
-  </Card>
-  <Card>
-    <p className="muted text-sm">Compliance Flags</p>
-    <div className="mt-2 flex items-center gap-2">
-      <span className="pill">7 open</span>
-      <span className="text-sm text-gray-700">/ 34</span>
-    </div>
-  </Card>
-</section>
+      <section className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <Card>
+          <p className="muted text-sm">Active Clients</p>
+          <p className="stat-number mt-2">128</p>
+        </Card>
+        <Card>
+          <p className="muted text-sm">Contracts</p>
+          <p className="stat-number mt-2">1,942</p>
+        </Card>
+        <Card>
+          <p className="muted text-sm">Payments (30d)</p>
+          <p className="stat-number mt-2">$482,120</p>
+        </Card>
+        <Card>
+          <p className="muted text-sm">Compliance Flags</p>
+          <div className="mt-2 flex items-center gap-2">
+            <span className="pill">7 open</span>
+            <span className="text-sm text-gray-700">/ 34</span>
+          </div>
+        </Card>
+      </section>
 
       {/* Actions */}
       <section className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -38,9 +38,11 @@ export default async function AdminDashboard() {
             <span className="grid h-9 w-9 place-items-center rounded-xl bg-blue-50 text-blue-600">👤</span>
             <div className="flex-1">
               <p className="font-medium text-gray-900">Invite Admin</p>
-              <p className="mt-1 text-sm text-gray-600">Create a new admin or superadmin.</p>
+              <p className="mt-1 text-sm text-gray-600">Create a new admin.</p>
             </div>
-            <a href="/users" className="btn btn-primary">Invite</a>
+            <a href="/admins" className="btn btn-primary">
+              Invite
+            </a>
           </div>
         </Card>
         <Card>
@@ -50,7 +52,9 @@ export default async function AdminDashboard() {
               <p className="font-medium text-gray-900">Review Flags</p>
               <p className="mt-1 text-sm text-gray-600">Triage open compliance items.</p>
             </div>
-            <a href="/documents" className="btn btn-primary">Open</a>
+            <a href="/documents" className="btn btn-primary">
+              Open
+            </a>
           </div>
         </Card>
       </section>
@@ -59,7 +63,10 @@ export default async function AdminDashboard() {
       <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
         <Card className="lg:col-span-2" title="Activity Timeline">
           <div className="space-y-3 text-sm">
-            <div className="flex items-center justify-between"><span>User promoted to admin</span><Badge label="2 m" tone="gray" /></div>
+            <div className="flex items-center justify-between">
+              <span>User promoted to admin</span>
+              <Badge label="2 m" tone="gray" />
+            </div>
             <div>Contract signed by Alice W.</div>
             <div>Payment batch #827 queued</div>
             <div>W-9 for Bob K. approved</div>
