@@ -6,10 +6,10 @@
       "server": "127.0.0.1",
       "port": 5432,
       "driver": "PostgreSQL",
-      "name": "wirebill",
-      "database": "wirebill",
-      "username": "wirebill",
-      "password": "wirebill"
+      "name": "remoola",
+      "database": "remoola",
+      "username": "remoola",
+      "password": "remoola"
     }
   ],
   "typescript.preferences.quoteStyle": "single",
@@ -38,7 +38,6 @@
     "typescriptreact"
   ],
   "eslint.run": "onType",
-  "eslint.alwaysShowStatus": true,
   // 💾 --- Auto Fix + Formatting ---
   "editor.formatOnSave": true,
   "editor.codeActionsOnSave": {
@@ -86,18 +85,36 @@
   },
   "change-case.default": [
     "snake_case",
-    "kebab-case",
+    "param-case",
     "camelCase",
     "PascalCase",
-    "CONST_CASE",
-    "param-case"
+    "CONST_CASE"
+  ],
+  "change-case.js": [
+    "snake_case",
+    "param-case",
+    "camelCase",
+    "PascalCase",
+    "CONST_CASE"
   ],
   "change-case.ts": [
     "snake_case",
-    "kebab-case",
+    "param-case",
     "camelCase",
     "PascalCase",
-    "CONST_CASE",
-    "param-case"
+    "CONST_CASE"
   ],
+  "change-case.cs": [
+    "snake_case",
+    "param-case",
+    "camelCase",
+    "PascalCase",
+    "CONST_CASE"
+  ],
+  "diffEditor.ignoreTrimWhitespace": false,
+  "terminal.integrated.copyOnSelection": true,
+  "terminal.integrated.tabs.focusMode": "singleClick",
+  "editor.minimap.enabled": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "javascript.updateImportsOnFileMove.enabled": "always",
 }
