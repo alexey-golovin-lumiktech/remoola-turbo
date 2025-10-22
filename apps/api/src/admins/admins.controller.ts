@@ -28,14 +28,14 @@ export class AdminsController {
 
   @Roles(UserRole.SUPERADMIN)
   @Get(`admins`)
-  listAdmins(@Query(`q`) query?: string) {
-    return this.adminsService.listAdmins(query);
+  listAdmins(@Query(`search`) search?: string) {
+    return this.adminsService.listAdmins(search);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`clients`)
-  listClients(@Query(`q`) query?: string) {
-    return this.adminsService.listClients(query);
+  listClients(@Query(`search`) search?: string) {
+    return this.adminsService.listClients(search);
   }
 
   @Get(`users`)
@@ -51,8 +51,8 @@ export class AdminsController {
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`contractors`)
-  listContractors(@Query(`q`) query?: string) {
-    return this.adminsService.listContractors(query);
+  listContractors(@Query(`search`) search?: string) {
+    return this.adminsService.listContractors(search);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
@@ -105,8 +105,8 @@ export class AdminsController {
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`documents`)
-  listDocuments(@Query(`q`) query?: string) {
-    return this.adminsService.listDocuments(query);
+  listDocuments(@Query(`search`) search?: string) {
+    return this.adminsService.listDocuments(search);
   }
 
   @Roles(UserRole.SUPERADMIN)

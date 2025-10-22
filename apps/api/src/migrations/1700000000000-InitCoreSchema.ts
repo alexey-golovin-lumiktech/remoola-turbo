@@ -3,12 +3,12 @@ import { type MigrationInterface, type QueryRunner, Table, TableForeignKey, Tabl
 export class InitCoreSchema1700000000000 implements MigrationInterface {
   name = `InitCoreSchema1700000000000`;
 
-  public async up(q: QueryRunner) {
-    await q.query(`
+  public async up(queryRunner: QueryRunner) {
+    await queryRunner.query(`
       CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     `);
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `user`,
         columns: [
@@ -22,7 +22,7 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
       }),
     );
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `contractor`,
         columns: [
@@ -36,7 +36,7 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
       }),
     );
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `contract`,
         columns: [
@@ -66,9 +66,9 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
         ],
       }),
     );
-    await q.createIndex(`contract`, new TableIndex({ columnNames: [`status`] }));
+    await queryRunner.createIndex(`contract`, new TableIndex({ columnNames: [`status`] }));
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `payment`,
         columns: [
@@ -92,9 +92,9 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
         ],
       }),
     );
-    await q.createIndex(`payment`, new TableIndex({ columnNames: [`status`] }));
+    await queryRunner.createIndex(`payment`, new TableIndex({ columnNames: [`status`] }));
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `document`,
         columns: [
@@ -117,9 +117,9 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
         ],
       }),
     );
-    await q.createIndex(`document`, new TableIndex({ columnNames: [`type`] }));
+    await queryRunner.createIndex(`document`, new TableIndex({ columnNames: [`type`] }));
 
-    await q.createTable(
+    await queryRunner.createTable(
       new Table({
         name: `compliance_checklist`,
         columns: [
@@ -143,15 +143,15 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
     );
   }
 
-  public async down(q: QueryRunner) {
-    await q.dropTable(`compliance_checklist`);
-    await q.dropIndex(`document`, `IDX_document_type`).catch(() => {});
-    await q.dropTable(`document`);
-    await q.dropIndex(`payment`, `IDX_payment_status`).catch(() => {});
-    await q.dropTable(`payment`);
-    await q.dropIndex(`contract`, `IDX_contract_status`).catch(() => {});
-    await q.dropTable(`contract`);
-    await q.dropTable(`contractor`);
-    await q.dropTable(`user`);
+  public async down(queryRunner: QueryRunner) {
+    await queryRunner.dropTable(`compliance_checklist`);
+    await queryRunner.dropIndex(`document`, `IDX_document_type`).catch(() => {});
+    await queryRunner.dropTable(`document`);
+    await queryRunner.dropIndex(`payment`, `IDX_payment_status`).catch(() => {});
+    await queryRunner.dropTable(`payment`);
+    await queryRunner.dropIndex(`contract`, `IDX_contract_status`).catch(() => {});
+    await queryRunner.dropTable(`contract`);
+    await queryRunner.dropTable(`contractor`);
+    await queryRunner.dropTable(`user`);
   }
 }

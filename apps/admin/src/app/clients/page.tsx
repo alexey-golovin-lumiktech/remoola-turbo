@@ -9,19 +9,19 @@ type User = { id: string; email: string; name: string; role: `client` | `admin` 
 
 export default function ClientsPage() {
   const [rows, setRows] = useState<User[]>([]);
-  const [q, setQ] = useState(``);
+  const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admins/clients${q ? `?q=${encodeURIComponent(q)}` : ``}`);
+    const data = await getJson<User[]>(`/admins/clients${search ? `?search=${encodeURIComponent(search)}` : ``}`);
     setRows(data);
   };
 
-  useEffect(() => void load(), [q]);
+  useEffect(() => void load(), [search]);
 
   return (
     <>
       <h1 className="text-3xl font-bold tracking-tight">Clients</h1>
-      <p className="mt-1 text-sm text-gray-600">Promote admins, manage access.</p>
+      <p className="mt-1 text-sm text-gray-600">Promote clients.</p>
 
       <section className="mt-4">
         <Card
@@ -29,8 +29,8 @@ export default function ClientsPage() {
             <input
               className="w-64 rounded-lg border px-3 py-2 text-sm"
               placeholder="Search email or name"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           }
         >

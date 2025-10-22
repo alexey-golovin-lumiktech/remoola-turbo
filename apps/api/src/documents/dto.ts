@@ -68,3 +68,17 @@ export class PresignedResponse implements IPresignedResponse {
   @ApiProperty()
   method: `PUT` | `POST`;
 }
+
+export class CreatePresignedBody {
+  @Expose()
+  @ApiPropertyOptional()
+  key?: string;
+
+  @Expose()
+  @ApiProperty()
+  filename: string;
+
+  @Expose()
+  @ApiProperty()
+  contentType: string;
+}

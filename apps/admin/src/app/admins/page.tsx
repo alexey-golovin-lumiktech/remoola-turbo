@@ -9,14 +9,14 @@ type User = { id: string; email: string; name: string; role: `client` | `admin` 
 
 export default function AdminsPage() {
   const [rows, setRows] = useState<User[]>([]);
-  const [q, setQ] = useState(``);
+  const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admins/admins${q ? `?q=${encodeURIComponent(q)}` : ``}`);
+    const data = await getJson<User[]>(`/admins/admins${search ? `?search=${encodeURIComponent(search)}` : ``}`);
     setRows(data);
   };
 
-  useEffect(() => void load(), [q]);
+  useEffect(() => void load(), [search]);
 
   return (
     <>
@@ -29,8 +29,8 @@ export default function AdminsPage() {
             <input
               className="w-64 rounded-lg border px-3 py-2 text-sm"
               placeholder="Search email or name"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           }
         >
@@ -49,7 +49,6 @@ export default function AdminsPage() {
                     value={u.role}
                     onChange={(e) => patchJson(`/admins/admins/${u.id}/role`, { role: e.target.value }).then(load)}
                   >
-                    <option value="client">client</option>
                     <option value="admin">admin</option>
                     <option value="superadmin">superadmin</option>
                   </select>

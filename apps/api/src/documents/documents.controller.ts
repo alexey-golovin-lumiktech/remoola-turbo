@@ -5,7 +5,7 @@ import { ApiOkResponse } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { DocumentsService } from './documents.service';
-import { UploadDocument, PresignedResponse, DocumentListItem } from './dto';
+import { UploadDocument, PresignedResponse, DocumentListItem, CreatePresignedBody } from './dto';
 
 @Controller(`documents`)
 export class DocumentsController {
@@ -21,12 +21,14 @@ export class DocumentsController {
   }
 
   @Post()
+  @ApiOkResponse({ type: DocumentListItem, isArray: false })
   upload(@Body() body: UploadDocument) {
     return this.documentsService.upload(body);
   }
 
   @Post(`presigned`)
-  async presigned(@Body() body: { key?: string; filename: string; contentType: string }) {
+  @ApiOkResponse({ type: PresignedResponse, isArray: false })
+  async presigned(@Body() body: CreatePresignedBody) {
     const key = body.key ?? `uploads/${Date.now()}-${encodeURIComponent(body.filename)}`;
     const Bucket = process.env.S3_BUCKET;
     const params = { Bucket, Key: key, ContentType: body.contentType };

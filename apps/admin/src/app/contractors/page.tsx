@@ -9,16 +9,16 @@ type Contractor = { id: string; name: string; email?: string; phone?: string };
 
 export default function ContractorsPage() {
   const [rows, setRows] = useState<Contractor[]>([]);
-  const [query, setQuery] = useState(``);
+  const [search, setSearch] = useState(``);
   const [name, setName] = useState(``);
 
   const load = async () => {
-    setRows(await getJson<Contractor[]>(`/admins/contractors${query ? `?q=${encodeURIComponent(query)}` : ``}`));
+    setRows(await getJson<Contractor[]>(`/admins/contractors${search ? `?search=${encodeURIComponent(search)}` : ``}`));
   };
 
   useEffect(() => {
     load();
-  }, [query]);
+  }, [search]);
 
   return (
     <>
@@ -32,8 +32,8 @@ export default function ContractorsPage() {
               <input
                 className="w-56 rounded-lg border px-3 py-2 text-sm"
                 placeholder="Search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
               />
               <input
                 className="w-56 rounded-lg border px-3 py-2 text-sm"
