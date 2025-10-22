@@ -30,7 +30,7 @@ export class PaymentsService {
       amount: fmt(p.amountCents),
       method: p.method,
       status:
-        p.status === PaymentStatus.COMPLETED ? `Completed` : p.status === PaymentStatus.PENDING ? `Pending` : `Failed`,
+        p.status == PaymentStatus.COMPLETED ? `Completed` : p.status == PaymentStatus.PENDING ? `Pending` : `Failed`,
       date: p.paidAt ? p.paidAt.toLocaleDateString(undefined, { month: `short`, day: `numeric` }) : ``,
     }));
   }

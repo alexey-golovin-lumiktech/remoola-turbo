@@ -1,7 +1,7 @@
 import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
 
 function isPlainObject(v: unknown): v is Record<string, unknown> {
-  return typeof v === `object` && v !== null && v.constructor === Object;
+  return typeof v == `object` && v !== null && v.constructor == Object;
 }
 
 function stripUndefined<T>(value: T): T {
@@ -21,7 +21,7 @@ function stripUndefined<T>(value: T): T {
 @Injectable()
 export class StripUndefinedPipe implements PipeTransform {
   transform<T>(value: T, metadata: ArgumentMetadata) {
-    if (metadata.type === `body` && isPlainObject(value)) {
+    if (metadata.type == `body` && isPlainObject(value)) {
       console.log(`[HERE]`);
       return stripUndefined(value);
     }

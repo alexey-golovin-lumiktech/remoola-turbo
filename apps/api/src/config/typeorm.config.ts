@@ -7,7 +7,7 @@ import { SnakeNamingStrategy } from './naming.strategy';
 export const typeormConfig = {
   type: `postgres` as const,
   url: process.env.DATABASE_URL,
-  ssl: process.env.DB_SSL === `true` ? { rejectUnauthorized: false } : false,
+  ssl: process.env.DB_SSL == `true` ? { rejectUnauthorized: false } : false,
   autoLoadEntities: true,
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
@@ -21,7 +21,7 @@ export const typeormAsyncConfig: TypeOrmModuleAsyncOptions = {
     return {
       ...typeormConfig,
       url: cfg.get<string>(`DATABASE_URL`),
-      ssl: cfg.get(`DB_SSL`) === `true` ? { rejectUnauthorized: false } : false,
+      ssl: cfg.get(`DB_SSL`) == `true` ? { rejectUnauthorized: false } : false,
       logging: [`warn`, `error`],
       password: cfg.get<string>(`POSTGRES_PASSWORD`),
       synchronize: true,

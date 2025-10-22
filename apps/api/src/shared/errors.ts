@@ -43,6 +43,6 @@ export const errors = {
 
 export const errorCodeMessageLookup = Object.fromEntries(
   Object.values(errors)
-    .filter((val) => typeof val === `object`)
+    .filter((val) => typeof val == `object`)
     .map((val) => [val.message, val.code]),
 );

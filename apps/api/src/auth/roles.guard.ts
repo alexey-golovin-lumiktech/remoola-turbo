@@ -10,11 +10,11 @@ export class RolesGuard implements CanActivate {
 
   canActivate(ctx: ExecutionContext): boolean {
     const required = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [ctx.getHandler(), ctx.getClass()]);
-    if (!required || required.length === 0) return true;
+    if (!required || required.length == 0) return true;
 
     const req = ctx.switchToHttp().getRequest<any>();
     const user = req.user as { role?: string };
 
-    return (!!user && required.includes(user.role)) || user?.role === UserRole.SUPERADMIN;
+    return (!!user && required.includes(user.role)) || user?.role == UserRole.SUPERADMIN;
   }
 }

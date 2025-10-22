@@ -4,3 +4,4 @@ export * from './convertPlainToInstance';
 export * from './fmt';
 export * from './money';
 export * from './normalize-string';
+export * from './remove-nill';

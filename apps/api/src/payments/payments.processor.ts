@@ -22,7 +22,7 @@ export class PaymentsProcessor extends WorkerHost {
 
     await new Promise((r) => setTimeout(r, 1500));
     const FORCE = process.env.FORCE_PAYMENT_RESULT;
-    const success = FORCE ? FORCE === `ok` : Math.random() < 0.85;
+    const success = FORCE ? FORCE == `ok` : Math.random() < 0.85;
 
     if (success) await this.paymentsService.markCompleted(payment.id);
     else throw new Error(errors.PAYMENTS_PROCESSOR_FAILURE.message);
