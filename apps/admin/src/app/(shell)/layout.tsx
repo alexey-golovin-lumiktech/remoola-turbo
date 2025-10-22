@@ -18,7 +18,7 @@ export default async function ShellLayout({ children }: { children: React.ReactN
         {/* Top bar */}
         <div className="mb-5 flex items-center justify-between gap-3">
           <div className="relative w-full">
-            <input className="input" placeholder="Search users, contracts, payments..." />
+            <input className="input" placeholder="Search admins, clients, contracts, payments..." />
             <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-400">⌘K</span>
           </div>
           <a

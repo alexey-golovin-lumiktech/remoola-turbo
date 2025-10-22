@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ILike, Repository } from 'typeorm';
+import { FindManyOptions, ILike, Repository } from 'typeorm';
 
 import { Contractor } from '../contractors/contractor.entity';
 import { Contract } from '../contracts/contract.entity';
 import { Document } from '../documents/document.entity';
 import { Payment } from '../payments/payment.entity';
-import { IUserRole } from '../shared';
+import { IUserRole, UserRole } from '../shared';
 import { User } from '../users/user.entity';
 
 @Injectable()
@@ -18,6 +18,34 @@ export class AdminsService {
     @InjectRepository(Payment) private payments: Repository<Payment>,
     @InjectRepository(Document) private documents: Repository<Document>,
   ) {}
+
+  listAdmins(query?: string) {
+    const options: FindManyOptions<User> = { order: { createdAt: `DESC` } };
+    const role = UserRole.ADMIN;
+
+    if (query) {
+      options.where = [
+        { role, email: ILike(`%${query}%`) },
+        { role, name: ILike(`%${query}%`) },
+      ];
+    } else options.where = { role };
+
+    return this.users.find(options);
+  }
+
+  listClients(query?: string) {
+    const options: FindManyOptions<User> = { order: { createdAt: `DESC` } };
+    const role = UserRole.CLIENT;
+
+    if (query) {
+      options.where = [
+        { role, email: ILike(`%${query}%`) },
+        { role, name: ILike(`%${query}%`) },
+      ];
+    } else options.where = { role };
+
+    return this.users.find(options);
+  }
 
   listUsers(query?: string) {
     const where = query ? [{ email: ILike(`%${query}%`) }, { name: ILike(`%${query}%`) }] : undefined;

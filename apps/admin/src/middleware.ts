@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const PROTECTED = [
+const PROTECTED_ROUTES = [
   `/`,
   `/admins`,
   `/clients`,
-  `/users`,
   `/contractors`,
   `/contracts`,
   `/payments`,
@@ -14,7 +13,7 @@ const PROTECTED = [
 export function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const hasAccess = req.cookies.get(`access_token`);
-  const isProtected = PROTECTED.some(p => path ==p || path.startsWith(p + `/`));
+  const isProtected = PROTECTED_ROUTES.some(p => path == p || path.startsWith(p + `/`));
 
   if (isProtected && !hasAccess) {
     const url = req.nextUrl.clone();

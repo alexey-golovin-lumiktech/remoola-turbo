@@ -1,4 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  ForbiddenException,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 import { AdminsService } from './admins.service';
@@ -16,9 +27,19 @@ import { IUserRole, UserRole } from '../shared';
 export class AdminsController {
   constructor(private readonly adminsService: AdminsService) {}
 
+  @Get(`admins`)
+  listAdmins(@Query(`q`) query?: string) {
+    return this.adminsService.listAdmins(query);
+  }
+
+  @Get(`clients`)
+  listClients(@Query(`q`) query?: string) {
+    return this.adminsService.listClients(query);
+  }
+
   @Get(`users`)
-  listUsers(@Query(`q`) query?: string) {
-    return this.adminsService.listUsers(query);
+  listUsers() {
+    throw new ForbiddenException(`this route deprecated`);
   }
 
   @Patch(`users/:id/role`)

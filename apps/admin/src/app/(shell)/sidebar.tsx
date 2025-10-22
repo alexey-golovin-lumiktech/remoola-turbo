@@ -25,10 +25,6 @@ export default function Sidebar() {
           Clients
         </SidebarLink>
 
-        <SidebarLink href="/users" active={path.startsWith(`/users`)}>
-          Users
-        </SidebarLink>
-
         <SidebarLink href="/contractors" active={path.startsWith(`/contractors`)}>
           Contractors
         </SidebarLink>
