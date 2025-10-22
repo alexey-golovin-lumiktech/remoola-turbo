@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner } from 'typeorm';
+import { type MigrationInterface, type QueryRunner } from 'typeorm';
 
 export class ExtendRoleEnum1700000000002 implements MigrationInterface {
   name = `ExtendRoleEnum1700000000002`;

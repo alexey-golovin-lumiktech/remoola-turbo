@@ -1,7 +1,7 @@
 import { ValidationPipe } from '@nestjs/common';
-import { RequestHandler } from '@nestjs/common/interfaces';
+import { type RequestHandler } from '@nestjs/common/interfaces';
 import { NestFactory, Reflector } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { type NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
 import { default as cookieParser } from 'cookie-parser';

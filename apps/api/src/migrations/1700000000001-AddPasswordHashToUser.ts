@@ -1,4 +1,4 @@
-import { MigrationInterface, QueryRunner, TableColumn } from 'typeorm';
+import { type MigrationInterface, type QueryRunner, TableColumn } from 'typeorm';
 
 export class AddPasswordHashToUser1700000000001 implements MigrationInterface {
   name = `AddPasswordHashToUser1700000000001`;

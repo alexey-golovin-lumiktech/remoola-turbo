@@ -1,6 +1,6 @@
-import { ValidationPipeOptions, HttpStatus, BadRequestException } from '@nestjs/common';
+import { type ValidationPipeOptions, HttpStatus, BadRequestException } from '@nestjs/common';
 import { instanceToPlain, plainToInstance } from 'class-transformer';
-import { ValidationError } from 'class-validator';
+import { type ValidationError } from 'class-validator';
 import { snakeCase } from 'lodash';
 import { titleCase } from 'typeorm/util/StringUtils';
 

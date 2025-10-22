@@ -1,5 +1,5 @@
-import { ValidationPipeOptions } from '@nestjs/common';
-import { plainToInstance, ClassConstructor } from 'class-transformer';
+import { type ValidationPipeOptions } from '@nestjs/common';
+import { plainToInstance, type ClassConstructor } from 'class-transformer';
 
 export const convertPlainToInstance = <ClassDTO>(classDTO: ClassConstructor<ClassDTO>, raw: unknown) => {
   const transformOptions = {
