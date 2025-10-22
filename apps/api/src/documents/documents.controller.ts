@@ -26,11 +26,11 @@ export class DocumentsController {
   }
 
   @Post(`presigned`)
-  async presigned(@Body() body: { key?: string; filename: string; contentType: string }): Promise<PresignedResponse> {
+  async presigned(@Body() body: { key?: string; filename: string; contentType: string }) {
     const key = body.key ?? `uploads/${Date.now()}-${encodeURIComponent(body.filename)}`;
     const Bucket = process.env.S3_BUCKET;
     const params = { Bucket, Key: key, ContentType: body.contentType };
     const url = await getSignedUrl(this.s3, new PutObjectCommand(params), { expiresIn: 60 });
-    return { url, fileUrl: `${process.env.S3_PUBLIC_BASE}/${key}`, method: `PUT` };
+    return { url, fileUrl: `${process.env.S3_PUBLIC_BASE}/${key}`, method: `PUT` } satisfies PresignedResponse;
   }
 }

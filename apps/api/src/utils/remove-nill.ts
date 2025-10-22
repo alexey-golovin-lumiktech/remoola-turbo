@@ -2,7 +2,7 @@ export const isUndefined = (value: unknown) => {
   return value == null || (typeof value == `string` && /undefined/gi.test(value.toLowerCase()));
 };
 
-export const isNull = (value: unknown): boolean => {
+export const isNull = (value: unknown) => {
   return value == null || (typeof value == `string` && /null/i.test(value.toLowerCase()));
 };
 

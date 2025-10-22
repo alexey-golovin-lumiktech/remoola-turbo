@@ -5,14 +5,8 @@ import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 
 import { errors } from '../shared';
+import { RefreshTokenPayload } from './types';
 import { User } from '../users/user.entity';
-
-interface RefreshTokenPayload {
-  sub: string;
-  phone: string;
-  exp: number;
-  iat: number;
-}
 
 @Injectable()
 export class AuthService {
@@ -51,10 +45,10 @@ export class AuthService {
     return this.jwt.sign({ sub: user.id, typ: `refresh` }, { secret, expiresIn: process.env.JWT_REFRESH_TTL || `7d` });
   }
 
-  verifyRefresh(token: string): RefreshTokenPayload {
+  verifyRefresh(token: string) {
     try {
       const secret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
-      return this.jwt.verify(token, { secret });
+      return this.jwt.verify<RefreshTokenPayload>(token, { secret });
     } catch {
       throw new UnauthorizedException(`Invalid refresh`);
     }

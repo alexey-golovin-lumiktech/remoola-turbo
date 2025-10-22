@@ -16,7 +16,7 @@ export class PaymentsProcessor extends WorkerHost {
     super();
   }
 
-  async process(job: Job<{ paymentId: string }>): Promise<void> {
+  async process(job: Job<{ paymentId: string }>) {
     const { paymentId } = job.data;
     const payment = await this.payments.findOneByOrFail({ id: paymentId });
 

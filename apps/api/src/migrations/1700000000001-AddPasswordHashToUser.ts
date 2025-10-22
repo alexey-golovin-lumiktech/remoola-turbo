@@ -3,7 +3,7 @@ import { type MigrationInterface, type QueryRunner, TableColumn } from 'typeorm'
 export class AddPasswordHashToUser1700000000001 implements MigrationInterface {
   name = `AddPasswordHashToUser1700000000001`;
 
-  public async up(q: QueryRunner): Promise<void> {
+  public async up(q: QueryRunner) {
     await q.addColumn(
       `user`,
       new TableColumn({
@@ -16,7 +16,8 @@ export class AddPasswordHashToUser1700000000001 implements MigrationInterface {
     );
     await q.query(`ALTER TABLE "user" ALTER COLUMN "password_hash" DROP DEFAULT`);
   }
-  public async down(q: QueryRunner): Promise<void> {
+
+  public async down(q: QueryRunner) {
     await q.dropColumn(`user`, `password_hash`);
   }
 }

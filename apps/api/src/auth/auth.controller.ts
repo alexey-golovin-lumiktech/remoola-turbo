@@ -33,7 +33,7 @@ export class AuthController {
   @Post(`login`)
   @HttpCode(200)
   @ApiOkResponse({ type: AuthResponse })
-  async login(@Body() body: Login, @Res({ passthrough: true }) res: express.Response): Promise<AuthResponse> {
+  async login(@Body() body: Login, @Res({ passthrough: true }) res: express.Response) {
     const user = await this.auth.validateUser(body.email, body.password);
     const access = this.auth.signAccess(user);
     const refresh = this.auth.signRefresh(user);
@@ -44,7 +44,7 @@ export class AuthController {
 
   @Post(`refresh`)
   @HttpCode(200)
-  refresh(@Res({ passthrough: true }) res: express.Response, @Body() body: object): AuthResponse {
+  refresh(@Res({ passthrough: true }) res: express.Response, @Body() body: object) {
     const key = `refresh_token` as const;
     const bodyRefreshToken = _.get(body, key);
     const cookies = res.req.get(`cookies`) as unknown as Record<string, string> | undefined;

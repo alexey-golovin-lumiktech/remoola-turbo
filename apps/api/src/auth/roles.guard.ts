@@ -8,7 +8,7 @@ import { UserRole } from '../shared';
 export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
-  canActivate(ctx: ExecutionContext): boolean {
+  canActivate(ctx: ExecutionContext) {
     const required = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [ctx.getHandler(), ctx.getClass()]);
     if (!required || required.length == 0) return true;
 

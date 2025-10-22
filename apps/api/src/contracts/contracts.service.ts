@@ -19,20 +19,23 @@ export class ContractsService {
     @InjectRepository(Contractor) private readonly contractors: Repository<Contractor>,
   ) {}
 
-  async list(clientId: string, search?: string): Promise<ContractListItem[]> {
+  async list(clientId: string, search?: string) {
     const rows = await this.contracts.find({
       where: { client: { id: clientId }, ...(search ? { contractor: { name: ILike(`%${search}%`) } } : {}) },
       order: { updatedAt: `DESC` },
     });
 
-    return rows.map((r) => ({
-      id: r.id,
-      contractorId: r.contractor?.id,
-      contractorName: r.contractor?.name,
-      rate: money(r.rateCents, r.rateUnit),
-      status: r.status,
-      lastActivityAgo: ago(r.lastActivityAt ?? r.updatedAt),
-    }));
+    return rows.map(
+      (r) =>
+        ({
+          id: r.id,
+          contractorId: r.contractor?.id,
+          contractorName: r.contractor?.name,
+          rate: money(r.rateCents, r.rateUnit),
+          status: r.status,
+          lastActivityAgo: ago(r.lastActivityAt ?? r.updatedAt),
+        }) satisfies ContractListItem,
+    );
   }
 
   async create(body: CreateContract) {

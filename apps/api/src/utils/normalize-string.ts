@@ -23,7 +23,7 @@ export const normalizeAndSanitizeArray = (arr: string[]) => {
   return arr.map(normalizeAndSanitizeString);
 };
 
-export const normalizeAndSplitString = (input: string): string[] => {
+export const normalizeAndSplitString = (input: string) => {
   return normalizeAndSanitizeString(input || EMPTY_STRING)
     .replace(NON_ALPHABETIC_CHARACTERS_KEEPING_SPACES_RE, EMPTY_STRING)
     .split(MULTI_SPACES_RE)

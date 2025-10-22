@@ -3,7 +3,7 @@ import { type MigrationInterface, type QueryRunner, Table, TableForeignKey, Tabl
 export class InitCoreSchema1700000000000 implements MigrationInterface {
   name = `InitCoreSchema1700000000000`;
 
-  public async up(q: QueryRunner): Promise<void> {
+  public async up(q: QueryRunner) {
     await q.query(`
       CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
     `);
@@ -143,7 +143,7 @@ export class InitCoreSchema1700000000000 implements MigrationInterface {
     );
   }
 
-  public async down(q: QueryRunner): Promise<void> {
+  public async down(q: QueryRunner) {
     await q.dropTable(`compliance_checklist`);
     await q.dropIndex(`document`, `IDX_document_type`).catch(() => {});
     await q.dropTable(`document`);

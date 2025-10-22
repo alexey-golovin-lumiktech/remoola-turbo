@@ -1,27 +1,20 @@
-import {
-  CallHandler,
-  CustomDecorator,
-  ExecutionContext,
-  Injectable,
-  NestInterceptor,
-  SetMetadata,
-} from '@nestjs/common';
-import { Reflector } from '@nestjs/core';
-import { ClassConstructor } from 'class-transformer';
-import { Observable } from 'rxjs';
+import { CallHandler, type ExecutionContext, Injectable, NestInterceptor, SetMetadata } from '@nestjs/common';
+import { type Reflector } from '@nestjs/core';
+import { type ClassConstructor } from 'class-transformer';
 import { map } from 'rxjs/operators';
 
 import { convertPlainToInstance } from '../../utils';
 
 const DTO_CLASS_TO_TRANSFORM_RESPONSE = Symbol(`DTO_CLASS_TO_TRANSFORM_RESPONSE`);
-export const TransformResponse = <T>(cls: ClassConstructor<T>): CustomDecorator<symbol> =>
-  SetMetadata(DTO_CLASS_TO_TRANSFORM_RESPONSE, cls);
+export const TransformResponse = <T>(cls: ClassConstructor<T>) => {
+  return SetMetadata(DTO_CLASS_TO_TRANSFORM_RESPONSE, cls);
+};
 
 @Injectable()
 export class TransformResponseInterceptor implements NestInterceptor {
   constructor(private reflector: Reflector) {}
 
-  intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
+  intercept(context: ExecutionContext, next: CallHandler<any>) {
     return next.handle().pipe(
       map((res) => {
         if (res) {

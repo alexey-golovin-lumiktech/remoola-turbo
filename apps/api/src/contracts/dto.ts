@@ -45,6 +45,10 @@ export class ContractListItem implements IContractListItem {
 
   @Expose()
   @ApiProperty()
+  contractorId!: string;
+
+  @Expose()
+  @ApiProperty()
   contractorName: string;
 
   @Expose()
