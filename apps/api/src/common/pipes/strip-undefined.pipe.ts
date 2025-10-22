@@ -1,10 +1,10 @@
 import { Injectable, PipeTransform, ArgumentMetadata } from '@nestjs/common';
 
-function isPlainObject(v: unknown): v is Record<string, unknown> {
+const isPlainObject = (v: unknown): v is Record<string, unknown> => {
   return typeof v == `object` && v != null && v.constructor == Object;
-}
+};
 
-function stripUndefined<T>(value: T): T {
+const stripUndefined = <T>(value: T): T => {
   if (Array.isArray(value)) {
     return value.map((v) => stripUndefined(v)) as T;
   }
@@ -16,7 +16,7 @@ function stripUndefined<T>(value: T): T {
     return out as T;
   }
   return value;
-}
+};
 
 @Injectable()
 export class StripUndefinedPipe implements PipeTransform {

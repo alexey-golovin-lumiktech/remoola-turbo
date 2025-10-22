@@ -11,14 +11,12 @@ export default function UsersPage() {
   const [rows, setRows] = useState<User[]>([]);
   const [q, setQ] = useState(``);
 
-  async function load() {
+  const load = async () => {
     const data = await getJson<User[]>(`/admins/users${q ? `?q=${encodeURIComponent(q)}` : ``}`);
     setRows(data);
-  }
+  };
 
-  useEffect(() => {
-    load();
-  }, [q]);
+  useEffect(() => void load(), [q]);
 
   return (
     <>

@@ -1,13 +1,12 @@
 'use client';
-export function getToken() {
-  if (typeof window ==`undefined`) return undefined;
-  return localStorage.getItem(`token`) ?? undefined;
+export const getToken = () => {
+  if (typeof window == `undefined`) return undefined;
 }
 
-export function setToken(token: string) {
+export const setToken = (token: string) => {
   localStorage.setItem(`token`, token);
 }
 
-export function clearToken() {
+export const clearToken = () => {
   localStorage.removeItem(`token`);
 }

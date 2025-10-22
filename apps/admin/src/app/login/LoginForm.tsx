@@ -7,7 +7,7 @@ export default function LoginForm({ nextPath }: { nextPath: string }) {
   const [password, setPassword] = useState(`password`);
   const [err, setErr] = useState<string>();
 
-  async function submit(e: React.FormEvent) {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErr(undefined);
 
@@ -30,7 +30,7 @@ export default function LoginForm({ nextPath }: { nextPath: string }) {
     }
 
     window.location.assign(nextPath || `/`);
-  }
+  };
 
   return (
     <div className="mx-auto max-w-md p-8">

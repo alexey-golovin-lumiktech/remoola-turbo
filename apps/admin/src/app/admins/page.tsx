@@ -1,20 +1,22 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import { Card, DataTable } from '@remoola/ui';
+import { Card, DataTable } from "@remoola/ui";
 
-import { getJson, patchJson } from '../../lib/api';
+import { getJson, patchJson } from "../../lib/api";
 
-type User = { id: string; email: string; name: string; role: `client`|`admin`|`superadmin` };
+type User = { id: string; email: string; name: string; role: `client` | `admin` | `superadmin` };
 
 export default function AdminsPage() {
   const [rows, setRows] = useState<User[]>([]);
   const [q, setQ] = useState(``);
-  async function load() {
+
+  const load = async () => {
     const data = await getJson<User[]>(`/admins/admins${q ? `?q=${encodeURIComponent(q)}` : ``}`);
     setRows(data);
-  }
-  useEffect(() => { load(); }, [q]);
+  };
+
+  useEffect(() => void load(), [q]);
 
   return (
     <>
@@ -22,21 +24,37 @@ export default function AdminsPage() {
       <p className="mt-1 text-sm text-gray-600">Promote admins, manage access.</p>
 
       <section className="mt-4">
-        <Card actions={<input className="w-64 rounded-lg border px-3 py-2 text-sm" placeholder="Search email or name" value={q} onChange={e=>setQ(e.target.value)} />}>
+        <Card
+          actions={
+            <input
+              className="w-64 rounded-lg border px-3 py-2 text-sm"
+              placeholder="Search email or name"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+          }
+        >
           <DataTable<User>
             rows={rows}
-            rowKey={(r)=>r.id}
+            rowKey={(r) => r.id}
             columns={[
               { key: `email`, header: `Email` },
-              { key: `name`,  header: `Name` },
-              { key: `role`,  header: `Role`, render: (u) => (
-                <select className="rounded border px-2 py-1 text-sm" value={u.role}
-                        onChange={(e)=>patchJson(`/admins/admins/${u.id}/role`, { role: e.target.value }).then(load)}>
-                  <option value="client">client</option>
-                  <option value="admin">admin</option>
-                  <option value="superadmin">superadmin</option>
-                </select>
-              )},
+              { key: `name`, header: `Name` },
+              {
+                key: `role`,
+                header: `Role`,
+                render: (u) => (
+                  <select
+                    className="rounded border px-2 py-1 text-sm"
+                    value={u.role}
+                    onChange={(e) => patchJson(`/admins/admins/${u.id}/role`, { role: e.target.value }).then(load)}
+                  >
+                    <option value="client">client</option>
+                    <option value="admin">admin</option>
+                    <option value="superadmin">superadmin</option>
+                  </select>
+                ),
+              },
             ]}
           />
         </Card>

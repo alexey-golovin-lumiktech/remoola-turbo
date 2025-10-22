@@ -17,7 +17,7 @@ export default function DocumentsPage() {
 
   useEffect(() => void load(), []);
 
-  async function upload(file: File) {
+  const upload = async (file: File) => {
     const presigned = await postJson<{ url: string; fileUrl: string; method: `PUT` }>(`/documents/presigned`, {
       filename: file.name,
       contentType: file.type || `application/octet-stream`,
@@ -36,7 +36,7 @@ export default function DocumentsPage() {
     });
 
     load();
-  }
+  };
 
   return (
     <>
