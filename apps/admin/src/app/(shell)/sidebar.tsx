@@ -3,7 +3,10 @@ import { usePathname } from "next/navigation";
 
 import { SidebarLink } from "@remoola/ui";
 
+import { useUser } from "../../context/UserContext";
+
 export default function Sidebar() {
+  const user = useUser();
   const path = usePathname();
 
   return (
@@ -17,9 +20,11 @@ export default function Sidebar() {
           Dashboard
         </SidebarLink>
 
-        <SidebarLink href="/admins" active={path.startsWith(`/admins`)}>
-          Admins
-        </SidebarLink>
+        {user?.role === `superadmin` && (
+          <SidebarLink href="/admins" active={path.startsWith(`/admins`)}>
+            Admins
+          </SidebarLink>
+        )}
 
         <SidebarLink href="/clients" active={path.startsWith(`/clients`)}>
           Clients
