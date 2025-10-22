@@ -4,6 +4,8 @@ import { DataSource } from 'typeorm';
 
 import { SnakeNamingStrategy } from './naming.strategy';
 
+export const POSTGRES_TIMEZONE = process.env.POSTGRES_TIMEZONE || `UTC`;
+
 export const typeormConfig = {
   type: `postgres` as const,
   url: process.env.DATABASE_URL,
@@ -12,6 +14,7 @@ export const typeormConfig = {
   synchronize: false,
   namingStrategy: new SnakeNamingStrategy(),
   password: process.env.POSTGRES_PASSWORD,
+  extra: { options: `-c timezone=${POSTGRES_TIMEZONE}` },
   migrations: [__dirname + `/../migrations/*.{ts,js}`],
 };
 
