@@ -3,7 +3,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AdminModule } from './admin/admin.module';
+import { AdminModule } from './admins/admins.module';
 import { AuthModule } from './auth/auth.module';
 import { CookieToAuthMiddleware } from './auth/cookie-to-auth.middleware';
 import { ComplianceChecklist } from './compliance/compliance.entity';

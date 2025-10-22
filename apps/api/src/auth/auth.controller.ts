@@ -33,11 +33,7 @@ export class AuthController {
   @Post(`login`)
   @HttpCode(200)
   @ApiOkResponse({ type: AuthResponse })
-  async login(
-    @Req() req: express.Request,
-    @Body() body: Login,
-    @Res({ passthrough: true }) res: express.Response,
-  ): Promise<AuthResponse> {
+  async login(@Body() body: Login, @Res({ passthrough: true }) res: express.Response): Promise<AuthResponse> {
     const user = await this.auth.validateUser(body.email, body.password);
     const access = this.auth.signAccess(user);
     const refresh = this.auth.signRefresh(user);

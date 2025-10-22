@@ -1,16 +1,19 @@
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
+import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
 import { Contract } from '../contracts/contract.entity';
 
 @Entity(`contractor`)
-export class Contractor {
-  @PrimaryGeneratedColumn(`uuid`) id!: string;
-  @Column() name!: string;
-  @Column({ nullable: true }) email?: string;
-  @Column({ nullable: true }) phone?: string;
+export class Contractor extends AbstractBaseAuditColumns {
+  @Column()
+  name!: string;
 
-  @OneToMany(() => Contract, (c) => c.contractor) contracts!: Contract[];
+  @Column({ nullable: true })
+  email?: string;
 
-  @CreateDateColumn() createdAt!: Date;
-  @UpdateDateColumn() updatedAt!: Date;
+  @Column({ nullable: true })
+  phone?: string;
+
+  @OneToMany(() => Contract, (e) => e.contractor)
+  contracts!: Contract[];
 }

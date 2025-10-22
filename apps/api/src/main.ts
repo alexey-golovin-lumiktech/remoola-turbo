@@ -1,4 +1,5 @@
 import { ValidationPipe } from '@nestjs/common';
+import { RequestHandler } from '@nestjs/common/interfaces';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -47,7 +48,8 @@ async function bootstrap() {
     .build();
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(`docs`, app, doc);
-  app.use(`/api-json`, (_req, res: express.Response) => res.send(doc));
+  const handler: RequestHandler = (_req, res) => res.send(doc);
+  app.getHttpAdapter().get(`/api-json`, handler);
 
   await app
     .listen(process.env.PORT ?? port.backend, process.env.HOST ?? host.ip)

@@ -7,16 +7,20 @@ import { PaymentsService } from './payments.service';
 @Controller(`payments`)
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
-  @Get() list(@Req() req: Request, @Query(`clientId`) clientId?: string) {
+
+  @Get()
+  list(@Req() req: Request, @Query(`clientId`) clientId?: string) {
     const sub = req.user?.[`sub`] || clientId;
     return this.paymentsService.listByClient(sub);
   }
 
-  @Post() start(@Body() body: StartPayment) {
+  @Post()
+  start(@Body() body: StartPayment) {
     return this.paymentsService.start(body);
   }
 
-  @Patch(`:id/status`) patch(@Param(`id`) id: string, @Body() body: UpdatePaymentStatus) {
+  @Patch(`:id/status`)
+  patch(@Param(`id`) id: string, @Body() body: UpdatePaymentStatus) {
     return this.paymentsService.markCompleted(id, body);
   }
 }

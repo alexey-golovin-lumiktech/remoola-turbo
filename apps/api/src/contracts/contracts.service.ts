@@ -14,13 +14,13 @@ export class ContractsService {
   private readonly logger = new Logger(ContractsService.name);
 
   constructor(
-    @InjectRepository(Contract) private readonly contractsRepository: Repository<Contract>,
-    @InjectRepository(User) private readonly usersRepository: Repository<User>,
-    @InjectRepository(Contractor) private readonly contractorsRepository: Repository<Contractor>,
+    @InjectRepository(Contract) private readonly contracts: Repository<Contract>,
+    @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(Contractor) private readonly contractors: Repository<Contractor>,
   ) {}
 
   async list(clientId: string, search?: string): Promise<ContractListItem[]> {
-    const rows = await this.contractsRepository.find({
+    const rows = await this.contracts.find({
       where: { client: { id: clientId }, ...(search ? { contractor: { name: ILike(`%${search}%`) } } : {}) },
       order: { updatedAt: `DESC` },
     });
@@ -37,20 +37,18 @@ export class ContractsService {
 
   async create(body: CreateContract) {
     try {
-      const client = await this.usersRepository.findOneByOrFail({ id: body.clientId });
+      const client = await this.users.findOneByOrFail({ id: body.clientId });
 
-      const contractor = !body.contractorId
-        ? null
-        : await this.contractorsRepository.findOneByOrFail({ id: body.contractorId });
+      const contractor = !body.contractorId ? null : await this.contractors.findOneByOrFail({ id: body.contractorId });
 
-      const contract = this.contractsRepository.create({
+      const contract = this.contracts.create({
         client,
         ...(contractor && { contractor }),
         rateCents: body.rateCents,
         rateUnit: body.rateUnit,
         status: ContractStatus.DRAFT,
       });
-      return this.contractsRepository.save(contract);
+      return this.contracts.save(contract);
     } catch (error) {
       this.logger.debug(String(error));
       throw new InternalServerErrorException({ message: `Something went wrong for create contract` });
@@ -58,7 +56,7 @@ export class ContractsService {
   }
 
   async update(id: string, body: UpdateContract) {
-    await this.contractsRepository.update({ id }, { ...body, lastActivityAt: new Date() });
-    return this.contractsRepository.findOneByOrFail({ id });
+    await this.contracts.update({ id }, { ...body, lastActivityAt: new Date() });
+    return this.contracts.findOneByOrFail({ id });
   }
 }

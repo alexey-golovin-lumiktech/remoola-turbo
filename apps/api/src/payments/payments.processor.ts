@@ -9,7 +9,7 @@ import { PaymentsService } from './payments.service';
 @Processor(`payments`, { concurrency: 3 })
 export class PaymentsProcessor extends WorkerHost {
   constructor(
-    @InjectRepository(Payment) private readonly paymentsRepository: Repository<Payment>,
+    @InjectRepository(Payment) private readonly payments: Repository<Payment>,
     private readonly paymentsService: PaymentsService,
   ) {
     super();
@@ -17,7 +17,7 @@ export class PaymentsProcessor extends WorkerHost {
 
   async process(job: Job<{ paymentId: string }>): Promise<void> {
     const { paymentId } = job.data;
-    const payment = await this.paymentsRepository.findOneByOrFail({ id: paymentId });
+    const payment = await this.payments.findOneByOrFail({ id: paymentId });
 
     await new Promise((r) => setTimeout(r, 1500));
     const FORCE = process.env.FORCE_PAYMENT_RESULT;

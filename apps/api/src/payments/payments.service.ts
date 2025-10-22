@@ -13,13 +13,13 @@ import { fmt } from '../utils';
 @Injectable()
 export class PaymentsService {
   constructor(
-    @InjectRepository(Payment) private readonly paymentsRepository: Repository<Payment>,
-    @InjectRepository(Contract) private readonly contractsRepository: Repository<Contract>,
-    @InjectQueue(`payments`) private readonly queue: Queue,
+    @InjectRepository(Payment) private readonly payments: Repository<Payment>,
+    @InjectRepository(Contract) private readonly contracts: Repository<Contract>,
+    @InjectQueue(`payments`) private readonly paymentsQueue: Queue,
   ) {}
 
   async listByClient(clientId: string) {
-    const rows = await this.paymentsRepository.find({
+    const rows = await this.payments.find({
       where: { contract: { client: { id: clientId } } },
       order: { createdAt: `DESC` },
     });
@@ -36,9 +36,9 @@ export class PaymentsService {
   }
 
   async start(body: StartPayment) {
-    const contract = await this.contractsRepository.findOneByOrFail({ id: body.contractId });
-    const entity = await this.paymentsRepository.save(
-      this.paymentsRepository.create({
+    const contract = await this.contracts.findOneByOrFail({ id: body.contractId });
+    const entity = await this.payments.save(
+      this.payments.create({
         contract,
         amountCents: body.amountCents,
         currency: body.currency ?? `USD`,
@@ -46,7 +46,7 @@ export class PaymentsService {
         status: PaymentStatus.PENDING,
       }),
     );
-    await this.queue.add(
+    await this.paymentsQueue.add(
       `process`,
       { paymentId: entity.id },
       {
@@ -61,11 +61,12 @@ export class PaymentsService {
   }
 
   async markCompleted(id: string, dto?: UpdatePaymentStatus) {
-    await this.paymentsRepository.update({ id }, { ...dto, status: PaymentStatus.COMPLETED, paidAt: new Date() });
-    return this.paymentsRepository.findOneByOrFail({ id });
+    await this.payments.update({ id }, { ...dto, status: PaymentStatus.COMPLETED, paidAt: new Date() });
+    return this.payments.findOneByOrFail({ id });
   }
+
   async markFailed(id: string) {
-    await this.paymentsRepository.update({ id }, { status: PaymentStatus.FAILED });
-    return this.paymentsRepository.findOneByOrFail({ id });
+    await this.payments.update({ id }, { status: PaymentStatus.FAILED });
+    return this.payments.findOneByOrFail({ id });
   }
 }

@@ -83,5 +83,21 @@
   },
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  }
+  },
+  "change-case.default": [
+    "snake_case",
+    "kebab-case",
+    "camelCase",
+    "PascalCase",
+    "CONST_CASE",
+    "param-case"
+  ],
+  "change-case.ts": [
+    "snake_case",
+    "kebab-case",
+    "camelCase",
+    "PascalCase",
+    "CONST_CASE",
+    "param-case"
+  ],
 }

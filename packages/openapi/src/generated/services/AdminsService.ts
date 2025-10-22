@@ -5,19 +5,19 @@
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
-export class AdminService {
+export class AdminsService {
     /**
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerListUsers({
+    public static adminsControllerListUsers({
         q,
     }: {
         q: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/users',
+            url: '/api/admins/users',
             query: {
                 'q': q,
             },
@@ -27,14 +27,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerSetRole({
+    public static adminsControllerSetRole({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/admin/users/{id}/role',
+            url: '/api/admins/users/{id}/role',
             path: {
                 'id': id,
             },
@@ -44,14 +44,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerListContractors({
+    public static adminsControllerListContractors({
         q,
     }: {
         q: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/contractors',
+            url: '/api/admins/contractors',
             query: {
                 'q': q,
             },
@@ -61,24 +61,24 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerCreateContractor(): CancelablePromise<any> {
+    public static adminsControllerCreateContractor(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/admin/contractors',
+            url: '/api/admins/contractors',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerUpdateContractor({
+    public static adminsControllerUpdateContractor({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/admin/contractors/{id}',
+            url: '/api/admins/contractors/{id}',
             path: {
                 'id': id,
             },
@@ -88,14 +88,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerDeleteContractor({
+    public static adminsControllerDeleteContractor({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/contractors/{id}',
+            url: '/api/admins/contractors/{id}',
             path: {
                 'id': id,
             },
@@ -105,24 +105,24 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerListContracts(): CancelablePromise<any> {
+    public static adminsControllerListContracts(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/contracts',
+            url: '/api/admins/contracts',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerUpdateContract({
+    public static adminsControllerUpdateContract({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/admin/contracts/{id}',
+            url: '/api/admins/contracts/{id}',
             path: {
                 'id': id,
             },
@@ -132,14 +132,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerDeleteContract({
+    public static adminsControllerDeleteContract({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/contracts/{id}',
+            url: '/api/admins/contracts/{id}',
             path: {
                 'id': id,
             },
@@ -149,24 +149,24 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerListPayments(): CancelablePromise<any> {
+    public static adminsControllerListPayments(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/payments',
+            url: '/api/admins/payments',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerDeletePayment({
+    public static adminsControllerDeletePayment({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/payments/{id}',
+            url: '/api/admins/payments/{id}',
             path: {
                 'id': id,
             },
@@ -176,14 +176,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerListDocuments({
+    public static adminsControllerListDocuments({
         q,
     }: {
         q: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/admin/documents',
+            url: '/api/admins/documents',
             query: {
                 'q': q,
             },
@@ -193,14 +193,14 @@ export class AdminService {
      * @returns any
      * @throws ApiError
      */
-    public static adminControllerDeleteDocument({
+    public static adminsControllerDeleteDocument({
         id,
     }: {
         id: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'DELETE',
-            url: '/api/admin/documents/{id}',
+            url: '/api/admins/documents/{id}',
             path: {
                 'id': id,
             },

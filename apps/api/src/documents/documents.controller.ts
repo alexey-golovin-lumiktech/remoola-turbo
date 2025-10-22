@@ -20,7 +20,8 @@ export class DocumentsController {
     return this.documentsService.listByClient(sub);
   }
 
-  @Post() upload(@Body() body: UploadDocument) {
+  @Post()
+  upload(@Body() body: UploadDocument) {
     return this.documentsService.upload(body);
   }
 

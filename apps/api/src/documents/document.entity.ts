@@ -1,19 +1,24 @@
-import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne } from 'typeorm';
 
+import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
 import { Contract } from '../contracts/contract.entity';
 import { DocumentType, DocumentTypes, IDocumentType } from '../shared';
 
 @Entity(`document`)
-export class Document {
-  @PrimaryGeneratedColumn(`uuid`) id!: string;
+export class Document extends AbstractBaseAuditColumns {
+  @ManyToOne(() => Contract, (e) => e.documents, { onDelete: `CASCADE`, eager: true })
+  contract!: Contract;
 
-  @ManyToOne(() => Contract, (c) => c.documents, { onDelete: `CASCADE`, eager: true }) contract!: Contract;
+  @Column()
+  name!: string;
 
-  @Column() name!: string;
-  @Index() @Column({ type: `enum`, enum: DocumentTypes, default: DocumentType.OTHER }) type!: IDocumentType;
-  @Column({ nullable: true }) fileUrl?: string;
-  @Column({ type: `int`, nullable: true }) sizeBytes?: number;
+  @Index()
+  @Column({ type: `enum`, enum: DocumentTypes, default: DocumentType.OTHER })
+  type!: IDocumentType;
 
-  @CreateDateColumn() createdAt!: Date;
-  @UpdateDateColumn() updatedAt!: Date;
+  @Column({ nullable: true })
+  fileUrl?: string;
+
+  @Column({ type: `int`, nullable: true })
+  sizeBytes?: number;
 }

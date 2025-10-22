@@ -1,21 +1,27 @@
-import { Column, CreateDateColumn, Entity, Index, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne } from 'typeorm';
 
+import { AbstractBaseAuditColumns } from '../common/entities/abstract-base-audit-columns';
 import { Contract } from '../contracts/contract.entity';
 import { PaymentStatuses, PaymentStatus, IPaymentStatus } from '../shared';
 
 @Entity(`payment`)
-export class Payment {
-  @PrimaryGeneratedColumn(`uuid`) id!: string;
+export class Payment extends AbstractBaseAuditColumns {
+  @ManyToOne(() => Contract, (e) => e.payments, { onDelete: `CASCADE`, eager: true })
+  contract!: Contract;
 
-  @ManyToOne(() => Contract, (c) => c.payments, { onDelete: `CASCADE`, eager: true }) contract!: Contract;
+  @Column({ type: `int` })
+  amountCents!: number;
 
-  @Column({ type: `int` }) amountCents!: number;
-  @Column({ length: 3, default: `USD` }) currency!: string;
-  @Column({ default: `ACH` }) method!: string;
+  @Column({ length: 3, default: `USD` })
+  currency!: string;
 
-  @Index() @Column({ type: `enum`, enum: PaymentStatuses, default: PaymentStatus.PENDING }) status!: IPaymentStatus;
-  @Column({ type: `timestamptz`, nullable: true }) paidAt?: Date;
+  @Column({ default: `ACH` })
+  method!: string;
 
-  @CreateDateColumn() createdAt!: Date;
-  @UpdateDateColumn() updatedAt!: Date;
+  @Index()
+  @Column({ type: `enum`, enum: PaymentStatuses, default: PaymentStatus.PENDING })
+  status!: IPaymentStatus;
+
+  @Column({ type: `timestamptz`, nullable: true })
+  paidAt?: Date;
 }

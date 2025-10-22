@@ -10,10 +10,27 @@ export type ICompliance = {
 };
 
 export class Dashboard implements IDashboard {
-  @Expose() @ApiProperty() balance: string;
-  @Expose() @ApiProperty() contractsActiveCount: number;
-  @Expose() @ApiProperty() lastPaymentAgo: string;
-  @Expose() @ApiProperty() openContracts: IContractListItem[];
-  @Expose() @ApiProperty() quickDocs: IDocumentListItem[];
-  @Expose() @ApiProperty() compliance: ICompliance;
+  @Expose()
+  @ApiProperty()
+  balance: string;
+
+  @Expose()
+  @ApiProperty()
+  contractsActiveCount: number;
+
+  @Expose()
+  @ApiProperty()
+  lastPaymentAgo: string;
+
+  @Expose()
+  @ApiProperty()
+  openContracts: IContractListItem[];
+
+  @Expose()
+  @ApiProperty()
+  quickDocs: IDocumentListItem[];
+
+  @Expose()
+  @ApiProperty()
+  compliance: ICompliance;
 }

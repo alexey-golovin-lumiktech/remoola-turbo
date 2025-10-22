@@ -11,7 +11,7 @@ export default function UsersPage() {
   const [rows, setRows] = useState<User[]>([]);
   const [q, setQ] = useState(``);
   async function load() {
-    const data = await getJson<User[]>(`/admin/users${q ? `?q=${encodeURIComponent(q)}` : ``}`);
+    const data = await getJson<User[]>(`/admins/users${q ? `?q=${encodeURIComponent(q)}` : ``}`);
     setRows(data);
   }
   useEffect(() => { load(); }, [q]);
@@ -31,7 +31,7 @@ export default function UsersPage() {
               { key: `name`,  header: `Name` },
               { key: `role`,  header: `Role`, render: (u) => (
                 <select className="rounded border px-2 py-1 text-sm" value={u.role}
-                        onChange={(e)=>patchJson(`/admin/users/${u.id}/role`, { role: e.target.value }).then(load)}>
+                        onChange={(e)=>patchJson(`/admins/users/${u.id}/role`, { role: e.target.value }).then(load)}>
                   <option value="client">client</option>
                   <option value="admin">admin</option>
                   <option value="superadmin">superadmin</option>

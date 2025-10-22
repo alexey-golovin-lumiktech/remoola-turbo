@@ -11,17 +11,21 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 @Controller(`contracts`)
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
-  @Get() list(@Req() req: Request, @Query(`clientId`) clientId?: string, @Query(`search`) search?: string) {
+
+  @Get()
+  list(@Req() req: Request, @Query(`clientId`) clientId?: string, @Query(`search`) search?: string) {
     const sub = req.user?.[`sub`] || clientId;
     return this.contractsService.list(sub, search);
   }
 
-  @Post() create(@Req() req: Request, @Body() body: CreateContract) {
+  @Post()
+  create(@Req() req: Request, @Body() body: CreateContract) {
     const clientId = (req as any).user.sub;
     return this.contractsService.create({ ...body, clientId });
   }
 
-  @Put(`:id`) update(@Param(`id`) id: string, @Body() body: UpdateContract) {
+  @Put(`:id`)
+  update(@Param(`id`) id: string, @Body() body: UpdateContract) {
     return this.contractsService.update(id, body);
   }
 }
