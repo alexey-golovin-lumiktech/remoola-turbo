@@ -10,21 +10,36 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
 import { AdminsService } from './admins.service';
+import { SearchResult } from './dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 import { Contractor } from '../contractors/contractor.entity';
 import { Contract } from '../contracts/contract.entity';
 import { IUserRole, UserRole } from '../shared';
+import { SearchService } from './search.service';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Controller(`admins`)
 export class AdminsController {
-  constructor(private readonly adminsService: AdminsService) {}
+  constructor(
+    private readonly adminsService: AdminsService,
+    private readonly searchService: SearchService,
+  ) {}
+
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
+  @Get(`global-search`)
+  @ApiOkResponse({ type: SearchResult, isArray: true })
+  async search(@Query(`search`) incoming: string) {
+    const search = incoming?.trim();
+    if (!search) return { results: [] };
+    const results = await this.searchService.globalSearch(search);
+    return { results };
+  }
 
   @Roles(UserRole.SUPERADMIN)
   @Get(`admins`)
