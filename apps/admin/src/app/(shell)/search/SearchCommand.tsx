@@ -40,7 +40,7 @@ export default function SearchCommand() {
       setLoading(true);
       try {
         const data = await getJson<{ results: SearchResult[] }>(
-          `/admins/global-search?search=${encodeURIComponent(search)}`,
+          `/admin/global-search?search=${encodeURIComponent(search)}`,
           { signal: controller.signal },
         );
 

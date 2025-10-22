@@ -21,7 +21,7 @@ export const raw = async (path: string, init?: RequestInit) => {
   return text ? JSON.parse(text) : null;
 }
 
-export const getJson = <T,>(p: string, init: Pick<RequestInit, `signal`>) => raw(p, init) as Promise<T>;
+export const getJson = <T,>(p: string, init?: Pick<RequestInit, `signal`>) => raw(p, init) as Promise<T>;
 
 export const postJson = <T,>(p: string, body: unknown) => raw(p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
 

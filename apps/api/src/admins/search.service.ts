@@ -2,41 +2,51 @@ import { Injectable } from '@nestjs/common';
 import { InjectDataSource } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 
-import { IDatasourceQuerySearchResult, SearchResult } from './dto';
-import { UserRole } from '../shared';
+import { IDatasourceQuerySearchResult, ISearchResultType, SearchResult, SearchResultType } from './dto';
+import { IUserRole, UserRole } from '../shared';
 
 @Injectable()
 export class SearchService {
   constructor(@InjectDataSource() private readonly dataSource: DataSource) {}
 
-  async globalSearch(q: string) {
-    const like = `${q.toLowerCase()}%`;
+  async globalSearch(search: string) {
+    const like = `${search.toLowerCase()}%`;
 
-    const adminsQuery = this.dataSource.query<IDatasourceQuerySearchResult[]>(
-      `SELECT id
-            , name
-      FROM public.user
-      WHERE role = 'admin'
-        AND (LOWER(name) ILIKE $1 OR LOWER(email) ILIKE $1)
-      LIMIT 5`,
-      [like],
+    const roles = [
+      [UserRole.ADMIN, SearchResultType.ADMIN],
+      [UserRole.CLIENT, SearchResultType.CLIENT],
+    ];
+
+    const results = await Promise.all(roles.map(([role, type]) => this.searchUsersByRole(role, type, like)));
+
+    return results.flat();
+  }
+
+  private async searchUsersByRole(role: IUserRole, type: ISearchResultType, like: string) {
+    const rows = await this.dataSource.query<IDatasourceQuerySearchResult[]>(
+      `SELECT id, name
+         FROM public.user
+        WHERE role = $1
+          AND (LOWER(name) ILIKE $2 OR LOWER(email) ILIKE $2)
+        LIMIT 5`,
+      [role, like],
     );
 
-    const clientsQuery = this.dataSource.query<IDatasourceQuerySearchResult[]>(
-      `SELECT id
-            , name AS name
-      FROM public.user
-      WHERE role = 'client'
-        AND (LOWER(name) ILIKE $1 OR LOWER(email) ILIKE $1)
-      LIMIT 5`,
-      [like],
-    );
+    return rows.map(this.compile(type));
+  }
 
-    const [admins, clients] = await Promise.all([adminsQuery, clientsQuery]);
+  private compile(type: ISearchResultType) {
+    const searchTypePrefix = {
+      [SearchResultType.ADMIN]: `admins`,
+      [SearchResultType.CLIENT]: `clients`,
+    };
 
-    return [
-      ...admins.map((a) => ({ ...a, type: UserRole.ADMIN, href: `/admins/${a.id}` })),
-      ...clients.map((c) => ({ ...c, type: UserRole.CLIENT, href: `/clients/${c.id}` })),
-    ] satisfies SearchResult[];
+    const prefix = searchTypePrefix[type];
+
+    return ({ id, name }: IDatasourceQuerySearchResult) => {
+      const href = `/${prefix}/${id}`;
+
+      return { id, name, type, href } satisfies SearchResult;
+    };
   }
 }

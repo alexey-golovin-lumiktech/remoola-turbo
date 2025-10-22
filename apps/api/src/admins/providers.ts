@@ -1,6 +1,6 @@
 import { type Provider } from '@nestjs/common';
 
-import { AdminsService } from './admins.service';
+import { AdminService } from './admin.service';
 import { SearchService } from './search.service';
 
-export const providers = [AdminsService, SearchService] satisfies Provider[];
+export const providers = [AdminService, SearchService] satisfies Provider[];

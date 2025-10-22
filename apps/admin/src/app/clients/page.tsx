@@ -12,7 +12,7 @@ export default function ClientsPage() {
   const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admins/clients${search ? `?search=${encodeURIComponent(search)}` : ``}`);
+    const data = await getJson<User[]>(`/admin/clients${search ? `?search=${encodeURIComponent(search)}` : ``}`);
     setRows(data);
   };
 

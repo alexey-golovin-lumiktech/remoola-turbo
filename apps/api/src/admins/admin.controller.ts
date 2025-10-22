@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
-import { AdminsService } from './admins.service';
+import { AdminService } from './admin.service';
 import { SearchResult } from './dto';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { Roles } from '../auth/roles.decorator';
@@ -24,17 +24,17 @@ import { SearchService } from './search.service';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard, RolesGuard)
-@Controller(`admins`)
-export class AdminsController {
+@Controller(`admin`)
+export class AdminController {
   constructor(
-    private readonly adminsService: AdminsService,
+    private readonly adminsService: AdminService,
     private readonly searchService: SearchService,
   ) {}
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`global-search`)
   @ApiOkResponse({ type: SearchResult, isArray: true })
-  async search(@Query(`search`) incoming: string) {
+  async globalSearch(@Query(`search`) incoming: string) {
     const search = incoming?.trim();
     if (!search) return { results: [] };
     const results = await this.searchService.globalSearch(search);

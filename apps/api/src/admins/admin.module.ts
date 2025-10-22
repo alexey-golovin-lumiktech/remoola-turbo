@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AdminsController } from './admins.controller';
+import { AdminController } from './admin.controller';
 import { providers } from './providers';
 import { Contractor } from '../contractors/contractor.entity';
 import { Contract } from '../contracts/contract.entity';
@@ -11,7 +11,7 @@ import { User } from '../users/user.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User, Contractor, Contract, Payment, Document])],
-  controllers: [AdminsController],
+  controllers: [AdminController],
   providers: providers,
 })
 export class AdminModule {}

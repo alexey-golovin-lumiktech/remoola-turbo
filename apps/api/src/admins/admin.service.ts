@@ -10,7 +10,7 @@ import { IUserRole, UserRole } from '../shared';
 import { User } from '../users/user.entity';
 
 @Injectable()
-export class AdminsService {
+export class AdminService {
   constructor(
     @InjectRepository(User) private users: Repository<User>,
     @InjectRepository(Contractor) private contractors: Repository<Contractor>,

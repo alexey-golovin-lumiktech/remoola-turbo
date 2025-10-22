@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose } from 'class-transformer';
 
-import { type IUserRole } from '../shared';
+export const SearchResultType = {
+  CLIENT: `client`,
+  ADMIN: `admin`,
+} as const;
+export const SearchResultTypes = Object.values(SearchResultType);
+export type ISearchResultType = (typeof SearchResultType)[keyof typeof SearchResultType];
 
 export class SearchResult {
   @Expose()
@@ -10,7 +15,7 @@ export class SearchResult {
 
   @Expose()
   @ApiProperty()
-  type: Exclude<IUserRole, `superadmin`>;
+  type: ISearchResultType;
 
   @Expose()
   @ApiProperty()
