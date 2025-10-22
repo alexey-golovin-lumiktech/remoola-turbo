@@ -12,14 +12,14 @@ import { User } from '../users/user.entity';
 @Injectable()
 export class AdminService {
   constructor(
-    @InjectRepository(User) private users: Repository<User>,
-    @InjectRepository(Contractor) private contractors: Repository<Contractor>,
-    @InjectRepository(Contract) private contracts: Repository<Contract>,
-    @InjectRepository(Payment) private payments: Repository<Payment>,
-    @InjectRepository(Document) private documents: Repository<Document>,
+    @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Contractor) private contractorRepository: Repository<Contractor>,
+    @InjectRepository(Contract) private contractRepository: Repository<Contract>,
+    @InjectRepository(Payment) private paymentRepository: Repository<Payment>,
+    @InjectRepository(Document) private documentRepository: Repository<Document>,
   ) {}
 
-  listAdmins(query?: string) {
+  searchAdmins(query?: string) {
     const options: FindManyOptions<User> = { order: { createdAt: `DESC` } };
     const role = UserRole.ADMIN;
 
@@ -30,10 +30,16 @@ export class AdminService {
       ];
     } else options.where = { role };
 
-    return this.users.find(options);
+    return this.userRepository.find(options);
   }
 
-  listClients(query?: string) {
+  getAdminById(adminId: string) {
+    return this.userRepository.findOne({
+      where: { role: UserRole.ADMIN, id: adminId },
+    });
+  }
+
+  searchClients(query?: string) {
     const options: FindManyOptions<User> = { order: { createdAt: `DESC` } };
     const role = UserRole.CLIENT;
 
@@ -44,59 +50,71 @@ export class AdminService {
       ];
     } else options.where = { role };
 
-    return this.users.find(options);
+    return this.userRepository.find(options);
+  }
+
+  getClientById(clientId: string) {
+    return this.userRepository.findOne({
+      where: { role: UserRole.CLIENT, id: clientId },
+    });
   }
 
   listUsers(query?: string) {
     const where = query ? [{ email: ILike(`%${query}%`) }, { name: ILike(`%${query}%`) }] : undefined;
-    return this.users.find({ where, order: { createdAt: `DESC` } });
+    return this.userRepository.find({ where, order: { createdAt: `DESC` } });
   }
 
-  setRole(id: string, body: { role: IUserRole }) {
-    return this.users.update({ id }, { role: body.role });
+  setRole(userId: string, body: { role: IUserRole }) {
+    return this.userRepository.update({ id: userId }, { role: body.role });
   }
 
   listContractors(query?: string) {
-    return this.contractors.find({ where: query ? { name: ILike(`%${query}%`) } : {}, order: { createdAt: `DESC` } });
+    return this.contractorRepository.find({
+      where: query ? { name: ILike(`%${query}%`) } : {},
+      order: { createdAt: `DESC` },
+    });
   }
 
   createContractor(body: { name: string; email?: string; phone?: string }) {
-    return this.contractors.save(this.contractors.create(body));
+    return this.contractorRepository.save(this.contractorRepository.create(body));
   }
 
-  updateContractor(id: string, body: Partial<Contractor>) {
-    return this.contractors.update({ id }, body);
+  updateContractor(contractorId: string, body: Partial<Contractor>) {
+    return this.contractorRepository.update({ id: contractorId }, body);
   }
 
-  deleteContractor(id: string) {
-    return this.contractors.delete({ id });
+  deleteContractor(contractorId: string) {
+    return this.contractorRepository.delete({ id: contractorId });
   }
 
   listContracts() {
-    return this.contracts.find({ order: { updatedAt: `DESC` } });
+    return this.contractRepository.find({ order: { updatedAt: `DESC` } });
   }
 
-  updateContract(id: string, b: Partial<Contract>) {
-    return this.contracts.update({ id }, b);
+  updateContract(contractId: string, b: Partial<Contract>) {
+    return this.contractRepository.update({ id: contractId }, b);
   }
 
-  deleteContract(id: string) {
-    return this.contracts.delete({ id });
+  deleteContract(contractId: string) {
+    return this.contractRepository.delete({ id: contractId });
   }
 
   listPayments() {
-    return this.payments.find({ order: { createdAt: `DESC` } });
+    return this.paymentRepository.find({ order: { createdAt: `DESC` } });
   }
 
-  deletePayment(id: string) {
-    return this.payments.delete({ id });
+  deletePayment(paymentId: string) {
+    return this.paymentRepository.delete({ id: paymentId });
   }
 
   listDocuments(query?: string) {
-    return this.documents.find({ where: query ? { name: ILike(`%${query}%`) } : {}, order: { updatedAt: `DESC` } });
+    return this.documentRepository.find({
+      where: query ? { name: ILike(`%${query}%`) } : {},
+      order: { updatedAt: `DESC` },
+    });
   }
 
-  deleteDocument(id: string) {
-    return this.documents.delete({ id });
+  deleteDocument(documentId: string) {
+    return this.documentRepository.delete({ id: documentId });
   }
 }

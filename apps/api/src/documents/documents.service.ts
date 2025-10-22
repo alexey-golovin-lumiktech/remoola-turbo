@@ -12,12 +12,12 @@ const fmtSize = (b?: number) =>
 @Injectable()
 export class DocumentsService {
   constructor(
-    @InjectRepository(Document) private readonly documents: Repository<Document>,
-    @InjectRepository(Contract) private readonly contracts: Repository<Contract>,
+    @InjectRepository(Document) private readonly documentRepository: Repository<Document>,
+    @InjectRepository(Contract) private readonly contractRepository: Repository<Contract>,
   ) {}
 
   async listByClient(clientId: string) {
-    const rows = await this.documents.find({
+    const rows = await this.documentRepository.find({
       where: { contract: { client: { id: clientId } } },
       order: { updatedAt: `DESC` },
       take: 100,
@@ -37,7 +37,7 @@ export class DocumentsService {
   }
 
   async upload(body: UploadDocument) {
-    const contract = await this.contracts.findOneByOrFail({ id: body.contractId });
-    return this.documents.save(this.documents.create({ ...body, contract }));
+    const contract = await this.contractRepository.findOneByOrFail({ id: body.contractId });
+    return this.documentRepository.save(this.documentRepository.create({ ...body, contract }));
   }
 }

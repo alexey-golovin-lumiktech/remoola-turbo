@@ -13,13 +13,13 @@ import { fmt } from '../utils';
 @Injectable()
 export class PaymentsService {
   constructor(
-    @InjectRepository(Payment) private readonly payments: Repository<Payment>,
-    @InjectRepository(Contract) private readonly contracts: Repository<Contract>,
+    @InjectRepository(Payment) private readonly paymentRepository: Repository<Payment>,
+    @InjectRepository(Contract) private readonly contractRepository: Repository<Contract>,
     @InjectQueue(`payments`) private readonly paymentsQueue: Queue,
   ) {}
 
   async listByClient(clientId: string) {
-    const rows = await this.payments.find({
+    const rows = await this.paymentRepository.find({
       where: { contract: { client: { id: clientId } } },
       order: { createdAt: `DESC` },
     });
@@ -36,9 +36,9 @@ export class PaymentsService {
   }
 
   async start(body: StartPayment) {
-    const contract = await this.contracts.findOneByOrFail({ id: body.contractId });
-    const entity = await this.payments.save(
-      this.payments.create({
+    const contract = await this.contractRepository.findOneByOrFail({ id: body.contractId });
+    const entity = await this.paymentRepository.save(
+      this.paymentRepository.create({
         contract,
         amountCents: body.amountCents,
         currency: body.currency ?? `USD`,
@@ -61,12 +61,12 @@ export class PaymentsService {
   }
 
   async markCompleted(id: string, dto?: UpdatePaymentStatus) {
-    await this.payments.update({ id }, { ...dto, status: PaymentStatus.COMPLETED, paidAt: new Date() });
-    return this.payments.findOneByOrFail({ id });
+    await this.paymentRepository.update({ id }, { ...dto, status: PaymentStatus.COMPLETED, paidAt: new Date() });
+    return this.paymentRepository.findOneByOrFail({ id });
   }
 
   async markFailed(id: string) {
-    await this.payments.update({ id }, { status: PaymentStatus.FAILED });
-    return this.payments.findOneByOrFail({ id });
+    await this.paymentRepository.update({ id }, { status: PaymentStatus.FAILED });
+    return this.paymentRepository.findOneByOrFail({ id });
   }
 }

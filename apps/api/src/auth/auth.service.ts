@@ -11,12 +11,12 @@ import { User } from '../users/user.entity';
 @Injectable()
 export class AuthService {
   constructor(
-    @InjectRepository(User) private readonly users: Repository<User>,
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
     private readonly jwt: JwtService,
   ) {}
 
   async validateUser(email: string, pass: string, isAdminApp = false) {
-    const user = await this.users
+    const user = await this.userRepository
       .createQueryBuilder(`u`)
       .addSelect(`u.passwordHash`)
       .where(`u.email = :email`, { email })
@@ -55,8 +55,8 @@ export class AuthService {
   }
 
   private async createClient(email: string, pass: string) {
-    return this.users.save(
-      this.users.create({
+    return this.userRepository.save(
+      this.userRepository.create({
         email,
         name: email,
         passwordHash: await bcrypt.hash(pass, 10),

@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  ForbiddenException,
-  Get,
-  Param,
-  Patch,
-  Post,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
 import { AdminService } from './admin.service';
@@ -43,25 +32,32 @@ export class AdminController {
 
   @Roles(UserRole.SUPERADMIN)
   @Get(`admins`)
-  listAdmins(@Query(`search`) search?: string) {
-    return this.adminsService.listAdmins(search);
+  searchAdmins(@Query(`search`) search?: string) {
+    return this.adminsService.searchAdmins(search);
+  }
+
+  @Roles(UserRole.SUPERADMIN)
+  @Get(`admins/:adminId`)
+  getAdminById(@Param(`adminId`) adminId: string) {
+    return this.adminsService.getAdminById(adminId);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`clients`)
-  listClients(@Query(`search`) search?: string) {
-    return this.adminsService.listClients(search);
+  searchClients(@Query(`search`) search?: string) {
+    return this.adminsService.searchClients(search);
   }
 
-  @Get(`users`)
-  listUsers() {
-    throw new ForbiddenException(`this route deprecated`);
+  @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
+  @Get(`clients/:clientId`)
+  getClientById(@Param(`clientId`) clientId: string) {
+    return this.adminsService.getClientById(clientId);
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Patch(`users/:id/role`)
-  setRole(@Param(`id`) id: string, @Body() body: { role: IUserRole }) {
-    return this.adminsService.setRole(id, body);
+  @Patch(`users/:userId/role`)
+  setRole(@Param(`userId`) userId: string, @Body() body: { role: IUserRole }) {
+    return this.adminsService.setRole(userId, body);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
@@ -77,15 +73,15 @@ export class AdminController {
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
-  @Patch(`contractors/:id`)
-  updateContractor(@Param(`id`) id: string, @Body() body: Partial<Contractor>) {
-    return this.adminsService.updateContractor(id, body);
+  @Patch(`contractors/:contractorId`)
+  updateContractor(@Param(`contractorId`) contractorId: string, @Body() body: Partial<Contractor>) {
+    return this.adminsService.updateContractor(contractorId, body);
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Delete(`contractors/:id`)
-  deleteContractor(@Param(`id`) id: string) {
-    return this.adminsService.deleteContractor(id);
+  @Delete(`contractors/:contractorId`)
+  deleteContractor(@Param(`contractorId`) contractorId: string) {
+    return this.adminsService.deleteContractor(contractorId);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
@@ -95,15 +91,15 @@ export class AdminController {
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
-  @Patch(`contracts/:id`)
-  updateContract(@Param(`id`) id: string, @Body() body: Partial<Contract>) {
-    return this.adminsService.updateContract(id, body);
+  @Patch(`contracts/:contractId`)
+  updateContract(@Param(`contractId`) contractId: string, @Body() body: Partial<Contract>) {
+    return this.adminsService.updateContract(contractId, body);
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Delete(`contracts/:id`)
-  deleteContract(@Param(`id`) id: string) {
-    return this.adminsService.deleteContract(id);
+  @Delete(`contracts/:contractId`)
+  deleteContract(@Param(`contractId`) contractId: string) {
+    return this.adminsService.deleteContract(contractId);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
@@ -113,9 +109,9 @@ export class AdminController {
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Delete(`payments/:id`)
-  deletePayment(@Param(`id`) id: string) {
-    return this.adminsService.deletePayment(id);
+  @Delete(`payments/:paymentId`)
+  deletePayment(@Param(`paymentId`) paymentId: string) {
+    return this.adminsService.deletePayment(paymentId);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
@@ -125,8 +121,8 @@ export class AdminController {
   }
 
   @Roles(UserRole.SUPERADMIN)
-  @Delete(`documents/:id`)
-  deleteDocument(@Param(`id`) id: string) {
-    return this.adminsService.deleteDocument(id);
+  @Delete(`documents/:documentId`)
+  deleteDocument(@Param(`documentId`) documentId: string) {
+    return this.adminsService.deleteDocument(documentId);
   }
 }

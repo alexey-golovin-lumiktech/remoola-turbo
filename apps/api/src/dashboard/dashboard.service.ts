@@ -12,23 +12,23 @@ import { ContractStatus, PaymentStatus } from '../shared';
 @Injectable()
 export class DashboardService {
   constructor(
-    @InjectRepository(Payment) private readonly payments: Repository<Payment>,
-    @InjectRepository(Contract) private readonly contracts: Repository<Contract>,
-    @InjectRepository(ComplianceChecklist) private readonly compliances: Repository<ComplianceChecklist>,
+    @InjectRepository(Payment) private readonly paymentRepository: Repository<Payment>,
+    @InjectRepository(Contract) private readonly contractRepository: Repository<Contract>,
+    @InjectRepository(ComplianceChecklist) private readonly complianceRepository: Repository<ComplianceChecklist>,
     private readonly documentsService: DocumentsService,
     private readonly contractsService: ContractsService,
   ) {}
 
   async get(clientId: string) {
     const [activeCount, lastPayment, openContracts, quickDocs, compliance] = await Promise.all([
-      this.contracts.count({ where: { client: { id: clientId }, status: ContractStatus.ACTIVE } }),
-      this.payments.findOne({
+      this.contractRepository.count({ where: { client: { id: clientId }, status: ContractStatus.ACTIVE } }),
+      this.paymentRepository.findOne({
         where: { contract: { client: { id: clientId } }, status: PaymentStatus.COMPLETED },
         order: { paidAt: `DESC` },
       }),
       this.contractsService.list(clientId),
       this.documentsService.listByClient(clientId).then((x) => x.slice(0, 3)),
-      this.compliances.findOne({ where: { user: { id: clientId } } }),
+      this.complianceRepository.findOne({ where: { user: { id: clientId } } }),
     ]);
 
     let lastPaymentAgo = `—`;
