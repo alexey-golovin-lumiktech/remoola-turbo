@@ -1,7 +1,7 @@
 import { Body, Controller, HttpCode, Post, Res, Get, UseGuards, Req } from '@nestjs/common';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import * as express from 'express';
-import * as _ from 'lodash';
+import _ from 'lodash';
 
 import { AuthService } from './auth.service';
 import { AuthResponse, Login } from './dto/login.dto';
@@ -14,7 +14,7 @@ export class AuthController {
 
   private setAuthCookies(res: express.Response, access: string, refresh: string) {
     const isProd = process.env.NODE_ENV === `production`;
-    const domain = isProd ? process.env.COOKIE_DOMAIN : undefined; // ❌ don't set on localhost
+    const domain = isProd ? process.env.COOKIE_DOMAIN : undefined; // ❌ don't set on localhost(127.0.0.1)
     const sameSite = isProd ? (`none` as const) : (`lax` as const);
     const secure = isProd || process.env.COOKIE_SECURE === `true`;
 
