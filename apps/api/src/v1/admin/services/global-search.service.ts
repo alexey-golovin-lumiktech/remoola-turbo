@@ -17,18 +17,23 @@ export class GlobalSearchService {
       [UserRole.CLIENT, SearchResultType.CLIENT],
     ];
 
-    const results = await Promise.all(roles.map(([role, type]) => this.searchUsersByRole(role, type, like)));
+    const users = await Promise.all(roles.map(([role, type]) => this.searchUsersByRole(role, type, like)));
 
-    return { results: results.flat() };
+    return { results: [...users.flat()] };
   }
 
   private async searchUsersByRole(role: IUserRole, type: ISearchResultType, like: string) {
     const rows = await this.datasource.query<IDatasourceQuerySearchResult[]>(
-      `SELECT id, name
-           FROM public.user
-          WHERE role = $1
-            AND (LOWER(name) ILIKE $2 OR LOWER(email) ILIKE $2)
-          LIMIT 5`,
+      ` SELECT id
+            , name
+        FROM public.user
+        WHERE role = $1
+          AND (
+            LOWER(name) ILIKE $2
+            OR
+            LOWER(email) ILIKE $2
+          )
+        LIMIT 5`,
       [role, like],
     );
 
