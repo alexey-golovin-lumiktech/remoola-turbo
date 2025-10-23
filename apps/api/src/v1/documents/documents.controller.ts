@@ -8,7 +8,7 @@ import { DocumentsService } from './documents.service';
 import { UploadDocument, PresignedResponse, DocumentListItem, CreatePresignedBody } from './dto';
 import { AWS_REGION, S3_BUCKET, S3_PUBLIC_BASE } from '../../envs';
 
-@Controller(`documents`)
+@Controller({ path: `consumer/documents`, version: `1` })
 export class DocumentsController {
   private s3 = new S3Client({ region: AWS_REGION });
 

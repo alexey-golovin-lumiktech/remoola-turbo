@@ -40,7 +40,7 @@ async function bootstrap() {
 
   app.enableVersioning({
     type: VersioningType.URI,
-    defaultVersion: `1`,
+    defaultVersion: versionsConfig.map((x) => x.version),
   });
 
   app.useGlobalInterceptors(

@@ -9,7 +9,7 @@ import { JwtAuthGuard } from './jwt.guard';
 import { errors, UserRole } from '../../common';
 import { NODE_ENV, COOKIE_DOMAIN, COOKIE_SECURE } from '../../envs';
 
-@Controller(`auth`)
+@Controller({ path: `auth`, version: `1` })
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 

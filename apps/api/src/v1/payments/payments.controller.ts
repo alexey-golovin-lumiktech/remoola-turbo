@@ -4,7 +4,7 @@ import { type Request } from 'express';
 import { StartPayment, UpdatePaymentStatus } from './dto';
 import { PaymentsService } from './payments.service';
 
-@Controller(`payments`)
+@Controller({ path: `consumer/payments`, version: `1` })
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 

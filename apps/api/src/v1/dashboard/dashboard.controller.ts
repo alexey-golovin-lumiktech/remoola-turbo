@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard)
-@Controller(`dashboard`)
+@Controller({ path: `consumer/dashboard`, version: `1` })
 export class DashboardController {
   constructor(private readonly dashboardService: DashboardService) {}
 

@@ -8,7 +8,7 @@ import { JwtAuthGuard } from '../auth/jwt.guard';
 
 @ApiBearerAuth(`jwt`)
 @UseGuards(JwtAuthGuard)
-@Controller(`contracts`)
+@Controller({ path: `consumer/contracts`, version: `1` })
 export class ContractsController {
   constructor(private readonly contractsService: ContractsService) {}
 
