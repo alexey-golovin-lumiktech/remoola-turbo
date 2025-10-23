@@ -8,7 +8,7 @@ import { default as cookieParser } from 'cookie-parser';
 import * as express from 'express';
 
 import { AppModule } from './app.module';
-import { TransformResponseInterceptor, validationPipeOpts } from './common';
+import { LoggingInterceptor, TransformResponseInterceptor, validationPipeOpts } from './common';
 import { GlobalExceptionFilter } from './common/filters';
 
 async function bootstrap() {
@@ -40,7 +40,7 @@ async function bootstrap() {
   );
 
   app.useGlobalFilters(new GlobalExceptionFilter());
-  app.useGlobalInterceptors(new TransformResponseInterceptor(app.get(Reflector)));
+  app.useGlobalInterceptors(new LoggingInterceptor(), new TransformResponseInterceptor(app.get(Reflector)));
   app.useGlobalPipes(new ValidationPipe(validationPipeOpts));
 
   const config = new DocumentBuilder()
