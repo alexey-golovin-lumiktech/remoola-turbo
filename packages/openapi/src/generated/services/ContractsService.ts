@@ -12,7 +12,7 @@ export class ContractsService {
      * @returns any
      * @throws ApiError
      */
-    public static contractsControllerList({
+    public static contractsControllerListV1({
         clientId,
         search,
     }: {
@@ -21,7 +21,7 @@ export class ContractsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/contracts',
+            url: '/api/v1/consumer/contracts',
             query: {
                 'clientId': clientId,
                 'search': search,
@@ -32,14 +32,14 @@ export class ContractsService {
      * @returns any
      * @throws ApiError
      */
-    public static contractsControllerCreate({
+    public static contractsControllerCreateV1({
         requestBody,
     }: {
         requestBody: CreateContract,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/contracts',
+            url: '/api/v1/consumer/contracts',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -48,7 +48,7 @@ export class ContractsService {
      * @returns any
      * @throws ApiError
      */
-    public static contractsControllerUpdate({
+    public static contractsControllerUpdateV1({
         id,
         requestBody,
     }: {
@@ -57,7 +57,7 @@ export class ContractsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PUT',
-            url: '/api/contracts/{id}',
+            url: '/api/v1/consumer/contracts/{id}',
             path: {
                 'id': id,
             },

@@ -1,4 +1,5 @@
 import { VersioningType } from '@nestjs/common';
+import { type RequestHandler } from '@nestjs/common/interfaces';
 import { NestFactory, Reflector } from '@nestjs/core';
 import { type NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, type SwaggerCustomOptions, SwaggerModule } from '@nestjs/swagger';
@@ -62,6 +63,9 @@ async function bootstrap() {
       deepScanRoutes: true,
       autoTagControllers: true,
     });
+
+    const json: RequestHandler = (_req, res) => res.send(doc);
+    app.getHttpAdapter().get(`/api-json/v${version}`, json);
 
     const options: SwaggerCustomOptions = {
       customSiteTitle: title,

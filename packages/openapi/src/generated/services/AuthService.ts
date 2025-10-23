@@ -12,14 +12,14 @@ export class AuthService {
      * @returns AuthResponse
      * @throws ApiError
      */
-    public static authControllerLogin({
+    public static authControllerLoginV1({
         requestBody,
     }: {
         requestBody: Login,
     }): CancelablePromise<AuthResponse> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/auth/login',
+            url: '/api/v1/auth/login',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -28,40 +28,40 @@ export class AuthService {
      * @returns any
      * @throws ApiError
      */
-    public static authControllerRefresh(): CancelablePromise<any> {
+    public static authControllerRefreshV1(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/auth/refresh',
+            url: '/api/v1/auth/refresh',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static authControllerLogout(): CancelablePromise<any> {
+    public static authControllerLogoutV1(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/auth/logout',
+            url: '/api/v1/auth/logout',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static authControllerWhoami(): CancelablePromise<any> {
+    public static authControllerWhoamiV1(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/auth/me',
+            url: '/api/v1/auth/me',
         });
     }
     /**
      * @returns any
      * @throws ApiError
      */
-    public static authControllerEcho(): CancelablePromise<any> {
+    public static authControllerEchoV1(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/auth/echo',
+            url: '/api/v1/auth/echo',
         });
     }
 }
