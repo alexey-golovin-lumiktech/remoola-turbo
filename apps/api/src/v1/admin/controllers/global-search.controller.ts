@@ -14,10 +14,9 @@ export class GlobalSearchController {
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get()
   @ApiOkResponse({ type: SearchResult, isArray: true })
-  async search(@Query(`search`) incoming: string) {
+  search(@Query(`search`) incoming: string) {
     const search = incoming?.trim();
     if (!search) return { results: [] };
-    const results = await this.service.search(search);
-    return { results };
+    return this.service.search(search);
   }
 }

@@ -19,7 +19,7 @@ export class GlobalSearchService {
 
     const results = await Promise.all(roles.map(([role, type]) => this.searchUsersByRole(role, type, like)));
 
-    return results.flat();
+    return { results: results.flat() };
   }
 
   private async searchUsersByRole(role: IUserRole, type: ISearchResultType, like: string) {
@@ -32,8 +32,7 @@ export class GlobalSearchService {
       [role, like],
     );
 
-    const results = rows.map(this.compile(type));
-    return { results };
+    return rows.map(this.compile(type));
   }
 
   private compile(type: ISearchResultType) {
