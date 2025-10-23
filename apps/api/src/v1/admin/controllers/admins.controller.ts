@@ -6,7 +6,7 @@ import { Roles } from '../../auth/roles.decorator';
 import { AdminService } from '../admin.service';
 
 @ApiTags(`admin`)
-@Controller({ path: `admins`, version: `1` })
+@Controller({ path: `admin/admins`, version: `1` })
 export class AdminsController {
   constructor(private readonly adminsService: AdminService) {}
 

@@ -12,7 +12,7 @@ export default function AdminsPage() {
   const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admin${search ? `?search=${encodeURIComponent(search)}` : ``}`);
+    const data = await getJson<User[]>(`/admin/admins${search ? `?search=${encodeURIComponent(search)}` : ``}`);
     setRows(data);
   };
 
