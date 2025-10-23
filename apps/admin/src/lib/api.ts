@@ -32,12 +32,12 @@ export const raw = async <T>(path: string, init?: RequestInit) => {
   return data;
 }
 
-export const getJson = <T,>(p: string, init?: Pick<RequestInit, `signal`>) => raw(p, init) as Promise<T>;
+export const getJson = <T,>(p: string, init?: Pick<RequestInit, `signal`>) => raw(`/admin` + p, init) as Promise<T>;
 
-export const postJson = <T,>(p: string, body: unknown) => raw(p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
+export const postJson = <T,>(p: string, body: unknown) => raw(`/admin` + p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
 
-export const patchJson = <T,>(p: string, body: unknown) => raw(p, { method: `PATCH`, body: JSON.stringify(body) }) as Promise<T>;
+export const patchJson = <T,>(p: string, body: unknown) => raw(`/admin` + p, { method: `PATCH`, body: JSON.stringify(body) }) as Promise<T>;
 
-export const putJson = <T,>(p: string, body: unknown) => raw(p, { method: `PUT`, body: JSON.stringify(body) }) as Promise<T>;
+export const putJson = <T,>(p: string, body: unknown) => raw(`/admin` + p, { method: `PUT`, body: JSON.stringify(body) }) as Promise<T>;
 
-export const delJson = <T,>(p: string) => raw(p, { method: `DELETE` }) as Promise<T>;
+export const delJson = <T,>(p: string) => raw(`/admin` + p, { method: `DELETE` }) as Promise<T>;

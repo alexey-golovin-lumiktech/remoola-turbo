@@ -39,10 +39,9 @@ export default function SearchCommand() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getJson<{ results: SearchResult[] }>(
-          `/admin/global-search?search=${encodeURIComponent(search)}`,
-          { signal: controller.signal },
-        );
+        const data = await getJson<{ results: SearchResult[] }>(`/global-search?search=${encodeURIComponent(search)}`, {
+          signal: controller.signal,
+        });
 
         setResults(data.results);
       } catch (err) {

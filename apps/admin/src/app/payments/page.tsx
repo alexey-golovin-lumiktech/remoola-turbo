@@ -14,10 +14,9 @@ type Pay = {
 
 export default function PaymentsPage() {
   const [rows, setRows] = useState<Pay[]>([]);
-  const load = async () => setRows(await getJson<Pay[]>(`/admin/payments`));
-  useEffect(() => {
-    load();
-  }, []);
+
+  const load = async () => setRows(await getJson<Pay[]>(`/payments`));
+  useEffect(() => void load(), []);
 
   return (
     <>
@@ -49,7 +48,7 @@ export default function PaymentsPage() {
                 render: (p) => (
                   <button
                     className="rounded border px-2 py-1 text-xs"
-                    onClick={() => delJson(`/admin/payments/${p.id}`).then(load)}
+                    onClick={() => delJson(`/payments/${p.id}`).then(load)}
                   >
                     Delete
                   </button>

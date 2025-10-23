@@ -17,11 +17,8 @@ type Contract = {
 export default function ContractsPage() {
   const [rows, setRows] = useState<Contract[]>([]);
 
-  const load = async () => setRows(await getJson<Contract[]>(`/admin/contracts`));
-
-  useEffect(() => {
-    load();
-  }, []);
+  const load = async () => setRows(await getJson<Contract[]>(`/contracts`));
+  useEffect(() => void load(), []);
 
   return (
     <>
@@ -67,7 +64,7 @@ export default function ContractsPage() {
                     <select
                       className="rounded border px-2 py-1 text-xs"
                       defaultValue={r.status}
-                      onChange={(e) => patchJson(`/admin/contracts/${r.id}`, { status: e.target.value }).then(load)}
+                      onChange={(e) => patchJson(`/contracts/${r.id}`, { status: e.target.value }).then(load)}
                     >
                       <option value="draft">draft</option>
                       <option value="signature">signature</option>
@@ -76,7 +73,7 @@ export default function ContractsPage() {
                     </select>
                     <button
                       className="rounded border px-2 py-1 text-xs"
-                      onClick={() => delJson(`/admin/contracts/${r.id}`).then(load)}
+                      onClick={() => delJson(`/contracts/${r.id}`).then(load)}
                     >
                       Delete
                     </button>

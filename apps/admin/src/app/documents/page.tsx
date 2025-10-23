@@ -10,11 +10,8 @@ type Doc = { id: string; name: string; type: string; sizeBytes?: number; updated
 export default function DocumentsPage() {
   const [rows, setRows] = useState<Doc[]>([]);
 
-  const load = async () => setRows(await getJson<Doc[]>(`/admin/documents`));
-
-  useEffect(() => {
-    load();
-  }, []);
+  const load = async () => setRows(await getJson<Doc[]>(`/documents`));
+  useEffect(() => void load(), []);
 
   return (
     <>
@@ -53,7 +50,7 @@ export default function DocumentsPage() {
                 render: (d) => (
                   <button
                     className="rounded border px-2 py-1 text-xs"
-                    onClick={() => delJson(`/admin/documents/${d.id}`).then(load)}
+                    onClick={() => delJson(`/documents/${d.id}`).then(load)}
                   >
                     Delete
                   </button>
