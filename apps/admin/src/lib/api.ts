@@ -8,7 +8,15 @@ const doFetch = (path: string, init?: RequestInit) => {
   });
 }
 
-export const raw = async (path: string, init?: RequestInit) => {
+type BackendResponse<T> = {
+  requestId: string
+  timestamp: string
+  path: string
+  data: T
+  version: string
+}
+
+export const raw = async <T>(path: string, init?: RequestInit) => {
   let request = await doFetch(path, init);
 
   if (request.status == 401) {
@@ -18,7 +26,10 @@ export const raw = async (path: string, init?: RequestInit) => {
 
   if (!request.ok) throw new Error(await request.text());
   const text = await request.text();
-  return text ? JSON.parse(text) : null;
+  if (!text) return null
+  const { data, ...response }: BackendResponse<T> = JSON.parse(text)
+  console.log(`[${request.status}] response: ` + JSON.stringify(response, null, -1));
+  return data;
 }
 
 export const getJson = <T,>(p: string, init?: Pick<RequestInit, `signal`>) => raw(p, init) as Promise<T>;

@@ -8,7 +8,15 @@ const doFetch = (path: string, init?: RequestInit) => {
   });
 }
 
-export const raw = async (path: string, init?: RequestInit) => {
+type BackendResponse<T> = {
+  requestId: string
+  timestamp: string
+  path: string
+  data: T
+  version: string
+}
+
+export const raw = async <T>(path: string, init?: RequestInit) => {
   let request = await doFetch(path, init);
 
   if (request.status == 401) {
@@ -18,13 +26,16 @@ export const raw = async (path: string, init?: RequestInit) => {
 
   if (!request.ok) throw new Error(await request.text());
   const text = await request.text();
-  return text ? JSON.parse(text) : null;
+  if (!text) return null
+  const { data, ...response }: BackendResponse<T> = JSON.parse(text)
+  console.log(`[${request.status}] response: ` + JSON.stringify(response, null, -1));
+  return data;
 }
 
-export const getJson = <T>(p: string) => raw(p) as Promise<T>;
+export const getJson = <T>(p: string) => raw<T>(p) as Promise<T>;
 
-export const postJson = <T>(p: string, body: unknown) => raw(p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
+export const postJson = <T>(p: string, body: unknown) => raw<T>(p, { method: `POST`, body: JSON.stringify(body) }) as Promise<T>;
 
-export const putJson = <T>(p: string, body: unknown) => raw(p, { method: `PUT`, body: JSON.stringify(body) }) as Promise<T>;
+export const putJson = <T>(p: string, body: unknown) => raw<T>(p, { method: `PUT`, body: JSON.stringify(body) }) as Promise<T>;
 
-export const patchJson = <T>(p: string, body: unknown) => raw(p, { method: `PATCH`, body: JSON.stringify(body) }) as Promise<T>;
+export const patchJson = <T>(p: string, body: unknown) => raw<T>(p, { method: `PATCH`, body: JSON.stringify(body) }) as Promise<T>;

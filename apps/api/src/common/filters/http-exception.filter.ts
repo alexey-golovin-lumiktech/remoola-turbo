@@ -1,19 +1,48 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException } from '@nestjs/common';
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-@Catch(HttpException)
+import { NODE_ENV } from '../../envs';
+import { extractApiVersionFromUrl } from '../utils';
+
+@Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
 
+    const version = extractApiVersionFromUrl(request);
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let errorResponse: Record<string, any>;
+
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const res = exception.getResponse();
+
+      // Normalize NestJS error response structure
+      if (typeof res === `string`) {
+        errorResponse = { message: res };
+      } else {
+        errorResponse = res as Record<string, any>;
+      }
+    } else {
+      // Handle non-HttpExceptions (e.g., runtime errors)
+      errorResponse = {
+        message: (exception as any)?.message || `Internal Server Error`,
+        stack: NODE_ENV !== `production` ? (exception as any)?.stack : undefined,
+      };
+    }
+    const requestId = request.headers[`x-request-id`] ?? crypto.randomUUID();
     response.status(status).json({
-      statusCode: status,
-      timestamp: new Date().toISOString(),
-      path: request.url,
-      message: exception.message,
+      version: version?.toString() ?? `neutral`,
+      error: {
+        requestId,
+        statusCode: status,
+        path: request.originalUrl,
+        method: request.method,
+        timestamp: new Date().toISOString(),
+        ...errorResponse,
+      },
     });
   }
 }

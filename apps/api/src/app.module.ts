@@ -1,50 +1,22 @@
-import { BullModule } from '@nestjs/bullmq';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AdminModule } from './admins/admin.module';
-import { AuthModule } from './auth/auth.module';
-import { CookieToAuthMiddleware } from './auth/cookie-to-auth.middleware';
-import { ComplianceChecklist } from './compliance/compliance.entity';
-import { typeormAsyncConfig } from './config/typeorm.config';
-import { Contractor } from './contractors/contractor.entity';
-import { Contract } from './contracts/contract.entity';
-import { ContractsController } from './contracts/contracts.controller';
-import { ContractsService } from './contracts/contracts.service';
-import { DashboardController } from './dashboard/dashboard.controller';
-import { DashboardService } from './dashboard/dashboard.service';
-import { Document } from './documents/document.entity';
-import { DocumentsController } from './documents/documents.controller';
-import { DocumentsService } from './documents/documents.service';
-import { Payment } from './payments/payment.entity';
-import { PaymentsController } from './payments/payments.controller';
-import { PaymentsProcessor } from './payments/payments.processor';
-import { PaymentsService } from './payments/payments.service';
-import { User } from './users/user.entity';
+import { ormConfig } from './config/orm.config';
+import { CoreDatabaseModule } from './core/database.module';
+import { SharedModule } from './shared/shared.module';
+import { CookieToAuthMiddleware } from './v1/auth/cookie-to-auth.middleware';
+import { V1Module } from './v1/v1.module';
+import { V2Module } from './v2/v2.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRootAsync(typeormAsyncConfig),
-    TypeOrmModule.forFeature([User, Contractor, Contract, Payment, Document, ComplianceChecklist]),
-    BullModule.forRoot({ connection: { url: process.env.REDIS_URL } }),
-    BullModule.registerQueue({ name: `payments` }),
-    AuthModule,
-    AdminModule,
-  ],
-  controllers: [
-    ContractsController, //
-    PaymentsController,
-    DocumentsController,
-    DashboardController,
-  ],
-  providers: [
-    ContractsService, //
-    PaymentsService,
-    PaymentsProcessor,
-    DocumentsService,
-    DashboardService,
+    TypeOrmModule.forRootAsync(ormConfig),
+    CoreDatabaseModule,
+    SharedModule,
+    V1Module,
+    V2Module,
   ],
 })
 export class AppModule implements NestModule {

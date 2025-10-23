@@ -5,9 +5,11 @@ import { Observable, tap } from 'rxjs';
 export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const now = Date.now();
-    const req = context.switchToHttp().getRequest<Request>();
-    console.log(`➡️  ${req.method} ${req.url}`);
+    const request = context.switchToHttp().getRequest<Request>();
+    console.log(`➡️  ${request.method} ${request.url}`);
 
-    return next.handle().pipe(tap(() => console.log(`⬅️  ${req.method} ${req.url} - ${Date.now() - now}ms`)));
+    return next
+      .handle() //
+      .pipe(tap(() => console.log(`⬅️  ${request.method} ${request.url} - ${Date.now() - now}ms`)));
   }
 }

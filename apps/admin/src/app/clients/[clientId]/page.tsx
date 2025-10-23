@@ -9,14 +9,25 @@ import { getClientSSR } from "../../../lib/server-clients";
 export default async function ClientPage({ params }: { params: { clientId: string } }) {
   const me = await getMeSSR();
   if (!me?.role || (me.role !== `admin` && me.role !== `superadmin`)) redirect(`/login?next=/`);
-
-  const client = await getClientSSR((await params).clientId);
+  type Client = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    email: string;
+    name: string;
+    role: string;
+    status: string;
+    phone: string;
+    contracts: [];
+    payments: [];
+  };
+  const client = await getClientSSR<Client>((await params).clientId);
   if (!client) redirect(`/clients`);
 
   return (
     <div className="space-y-6">
       <Card className="p-6">
-        <h1 className="text-2xl font-semibold mb-4">{client.full_name}</h1>
+        <h1 className="text-2xl font-semibold mb-4">{client.name}</h1>
 
         <div className="grid grid-cols-2 gap-4">
           <div>
@@ -37,7 +48,7 @@ export default async function ClientPage({ params }: { params: { clientId: strin
           </div>
           <div>
             <p className="text-sm text-gray-500">Created</p>
-            <p>{new Date(client.created_at).toLocaleString()}</p>
+            <p>{new Date(client.createdAt).toLocaleString()}</p>
           </div>
         </div>
       </Card>
