@@ -118,4 +118,7 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.enablePromptUseWorkspaceTsdk": true,
+  "[snippets]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
 }
