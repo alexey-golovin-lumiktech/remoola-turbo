@@ -4,28 +4,28 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserRole } from '../../../common';
 import { Roles } from '../../auth/roles.decorator';
 import { ContractEntity } from '../../contracts/contract.entity';
-import { AdminService } from '../admin.service';
+import { ContractsService } from '../services/contracts.service';
 
 @ApiTags(`admin`)
 @Controller({ path: `admin/contracts`, version: `1` })
 export class ContractsController {
-  constructor(private readonly adminsService: AdminService) {}
+  constructor(private readonly service: ContractsService) {}
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get()
-  listContracts() {
-    return this.adminsService.listContracts();
+  list() {
+    return this.service.list();
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Patch(`:contractId`)
-  updateContract(@Param(`contractId`) contractId: string, @Body() body: Partial<ContractEntity>) {
-    return this.adminsService.updateContract(contractId, body);
+  patch(@Param(`contractId`) contractId: string, @Body() body: Partial<ContractEntity>) {
+    return this.service.patch(contractId, body);
   }
 
   @Roles(UserRole.SUPERADMIN)
   @Delete(`:contractId`)
-  deleteContract(@Param(`contractId`) contractId: string) {
-    return this.adminsService.deleteContract(contractId);
+  delete(@Param(`contractId`) contractId: string) {
+    return this.service.delete(contractId);
   }
 }

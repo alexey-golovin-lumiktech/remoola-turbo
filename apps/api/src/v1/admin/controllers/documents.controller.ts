@@ -3,22 +3,22 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { UserRole } from '../../../common';
 import { Roles } from '../../auth/roles.decorator';
-import { AdminService } from '../admin.service';
+import { DocumentsService } from '../services/documents.service';
 
 @ApiTags(`admin`)
 @Controller({ path: `admin/documents`, version: `1` })
 export class DocumentsController {
-  constructor(private readonly adminsService: AdminService) {}
+  constructor(private readonly service: DocumentsService) {}
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get()
-  listDocuments(@Query(`search`) search?: string) {
-    return this.adminsService.listDocuments(search);
+  search(@Query(`search`) search?: string) {
+    return this.service.search(search);
   }
 
   @Roles(UserRole.SUPERADMIN)
   @Delete(`:documentId`)
-  deleteDocument(@Param(`documentId`) documentId: string) {
-    return this.adminsService.deleteDocument(documentId);
+  delete(@Param(`documentId`) documentId: string) {
+    return this.service.delete(documentId);
   }
 }

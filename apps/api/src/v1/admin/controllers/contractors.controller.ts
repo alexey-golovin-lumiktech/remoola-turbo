@@ -4,34 +4,34 @@ import { ApiTags } from '@nestjs/swagger';
 import { UserRole } from '../../../common';
 import { Roles } from '../../auth/roles.decorator';
 import { ContractorEntity } from '../../contractors/contractor.entity';
-import { AdminService } from '../admin.service';
+import { ContractorsService } from '../services/contractors.service';
 
 @ApiTags(`admin`)
 @Controller({ path: `admin/contractors`, version: `1` })
 export class ContractorsController {
-  constructor(private readonly adminsService: AdminService) {}
+  constructor(private readonly service: ContractorsService) {}
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get()
-  listContractors(@Query(`search`) search?: string) {
-    return this.adminsService.listContractors(search);
+  search(@Query(`search`) search?: string) {
+    return this.service.search(search);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Post()
-  createContractor(@Body() body: { name: string; email?: string; phone?: string }) {
-    return this.adminsService.createContractor(body);
+  create(@Body() body: { name: string; email?: string; phone?: string }) {
+    return this.service.create(body);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Patch(`:contractorId`)
-  updateContractor(@Param(`contractorId`) contractorId: string, @Body() body: Partial<ContractorEntity>) {
-    return this.adminsService.updateContractor(contractorId, body);
+  patch(@Param(`contractorId`) contractorId: string, @Body() body: Partial<ContractorEntity>) {
+    return this.service.patch(contractorId, body);
   }
 
   @Roles(UserRole.SUPERADMIN)
   @Delete(`:contractorId`)
-  deleteContractor(@Param(`contractorId`) contractorId: string) {
-    return this.adminsService.deleteContractor(contractorId);
+  delete(@Param(`contractorId`) contractorId: string) {
+    return this.service.delete(contractorId);
   }
 }

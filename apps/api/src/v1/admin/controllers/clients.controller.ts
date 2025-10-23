@@ -3,22 +3,22 @@ import { ApiTags } from '@nestjs/swagger';
 
 import { UserRole } from '../../../common';
 import { Roles } from '../../auth/roles.decorator';
-import { AdminService } from '../admin.service';
+import { ClientsService } from '../services/clients.service';
 
 @ApiTags(`admin`)
 @Controller({ path: `admin/clients`, version: `1` })
 export class ClientsController {
-  constructor(private readonly adminsService: AdminService) {}
+  constructor(private readonly service: ClientsService) {}
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get()
-  searchClients(@Query(`search`) search?: string) {
-    return this.adminsService.searchClients(search);
+  search(@Query(`search`) search?: string) {
+    return this.service.search(search);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`:clientId`)
-  getClientById(@Param(`clientId`) clientId: string) {
-    return this.adminsService.getClientById(clientId);
+  getById(@Param(`clientId`) clientId: string) {
+    return this.service.getById(clientId);
   }
 }
