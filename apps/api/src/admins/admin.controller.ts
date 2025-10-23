@@ -36,16 +36,16 @@ export class AdminController {
     return this.adminsService.searchAdmins(search);
   }
 
-  @Roles(UserRole.SUPERADMIN)
-  @Get(`:adminId`)
-  getAdminById(@Param(`adminId`) adminId: string) {
-    return this.adminsService.getAdminById(adminId);
-  }
-
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)
   @Get(`clients`)
   searchClients(@Query(`search`) search?: string) {
     return this.adminsService.searchClients(search);
+  }
+
+  @Roles(UserRole.SUPERADMIN)
+  @Get(`:adminId`)
+  getAdminById(@Param(`adminId`) adminId: string) {
+    return this.adminsService.getAdminById(adminId);
   }
 
   @Roles(UserRole.SUPERADMIN, UserRole.ADMIN)

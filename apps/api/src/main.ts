@@ -12,9 +12,6 @@ import { TransformResponseInterceptor, validationPipeOpts } from './common';
 import { GlobalExceptionFilter } from './common/filters';
 
 async function bootstrap() {
-  const host = { unset: `[::1]`, local: `localhost`, ip: `127.0.0.1` };
-  const port = { consumer: 3000, backend: 3333, admin: 3010 };
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: {
       origin: true,
@@ -54,12 +51,16 @@ async function bootstrap() {
     .build();
   const doc = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup(`docs`, app, doc);
-  const handler: RequestHandler = (_req, res) => res.send(doc);
-  app.getHttpAdapter().get(`/api-json`, handler);
+
+  const json: RequestHandler = (_req, res) => res.send(doc);
+  app.getHttpAdapter().get(`/api-json`, json);
+
+  const docs: RequestHandler = (_req, res) => res.redirect(302, `/docs`);
+  app.getHttpAdapter().get(`/`, docs);
 
   await app
-    .listen(process.env.PORT ?? port.backend, process.env.HOST ?? host.ip)
+    .listen(process.env.PORT ?? 3333)
     .then(() => (console.log(``), app.getUrl()))
-    .then((appUrl) => console.debug(`Application is running on:: "${appUrl}"`));
+    .then((appUrl) => console.debug(`🚀 API running at "${appUrl}"`));
 }
 bootstrap();

@@ -33,8 +33,19 @@ import { User } from './users/user.entity';
     AuthModule,
     AdminModule,
   ],
-  controllers: [ContractsController, PaymentsController, DocumentsController, DashboardController],
-  providers: [ContractsService, PaymentsService, PaymentsProcessor, DocumentsService, DashboardService],
+  controllers: [
+    ContractsController, //
+    PaymentsController,
+    DocumentsController,
+    DashboardController,
+  ],
+  providers: [
+    ContractsService, //
+    PaymentsService,
+    PaymentsProcessor,
+    DocumentsService,
+    DashboardService,
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
