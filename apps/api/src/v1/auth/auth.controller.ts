@@ -3,21 +3,22 @@ import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import * as express from 'express';
 import _ from 'lodash';
 
+import { parsedEnvs } from '@remoola/env';
+
 import { AuthService } from './auth.service';
 import { AuthResponse, Login } from './dto/login.dto';
 import { JwtAuthGuard } from './jwt.guard';
 import { errors, UserRole } from '../../common';
-import { NODE_ENV, COOKIE_DOMAIN, COOKIE_SECURE } from '../../envs';
 
 @Controller({ path: `auth`, version: `1` })
 export class AuthController {
   constructor(private readonly auth: AuthService) {}
 
   private setAuthCookies(res: express.Response, access: string, refresh: string) {
-    const isProd = NODE_ENV == `production`;
-    const domain = isProd ? COOKIE_DOMAIN : undefined; // ❌ don't set on localhost(127.0.0.1)
+    const isProd = parsedEnvs.NODE_ENV == `production`;
+    const domain = isProd ? parsedEnvs.COOKIE_DOMAIN : undefined; // ❌ don't set on localhost(127.0.0.1)
     const sameSite = isProd ? (`none` as const) : (`lax` as const);
-    const secure = isProd || COOKIE_SECURE == `true`;
+    const secure = isProd || parsedEnvs.COOKIE_SECURE == `true`;
 
     const common = {
       httpOnly: true,

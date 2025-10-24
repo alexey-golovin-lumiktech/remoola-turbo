@@ -6,12 +6,13 @@ import { DocumentBuilder, type SwaggerCustomOptions, SwaggerModule } from '@nest
 import { default as cookieParser } from 'cookie-parser';
 import * as express from 'express';
 
+import { parsedEnvs, envWatcher } from '@remoola/env';
+
 import { AppModule } from './app.module';
 import { LoggingInterceptor, ResponseTransformInterceptor, HttpExceptionFilter } from './common';
 import { SharedModule } from './shared/shared.module';
 import { V1Module } from './v1/v1.module';
 import { V2Module } from './v2/v2.module';
-
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     cors: {
@@ -24,7 +25,7 @@ async function bootstrap() {
   app.setGlobalPrefix(`api`);
   app.use(express.json({ limit: `25mb` }));
   app.use(express.urlencoded({ extended: true, limit: `25mb` }));
-  app.use(cookieParser(process.env.SECURE_SESSION_SECRET));
+  app.use(cookieParser(parsedEnvs.SECURE_SESSION_SECRET));
 
   const versionsConfig = [
     {
@@ -89,8 +90,15 @@ async function bootstrap() {
   };
 
   await app
-    .listen(process.env.PORT ?? 3333)
+    .listen(parsedEnvs.PORT)
     .then(() => (console.log(``), app.getUrl()))
     .then(info);
+
+  if (parsedEnvs.NODE_ENV === `development`) {
+    envWatcher.on(`updated`, (newEnv, oldEnv) => {
+      const difference = Object.entries(newEnv).filter(([k, v]) => oldEnv[k] !== v);
+      console.log(`♻️  Env updated:`, Object.fromEntries(difference));
+    });
+  }
 }
 bootstrap();

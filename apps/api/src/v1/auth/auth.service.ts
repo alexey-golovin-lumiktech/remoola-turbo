@@ -1,12 +1,13 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService, JwtSignOptions } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcryptjs';
 import { Repository } from 'typeorm';
 
+import { parsedEnvs } from '@remoola/env';
+
 import { RefreshTokenPayload } from './types';
 import { errors } from '../../common';
-import { JWT_SECRET, JWT_ACCESS_TTL, JWT_REFRESH_SECRET, JWT_REFRESH_TTL } from '../../envs';
 import { UserEntity } from '../users/user.entity';
 
 @Injectable()
@@ -32,20 +33,20 @@ export class AuthService {
   }
 
   signAccess(user: Pick<UserEntity, `id` | `email` | `role`>) {
-    const secret = JWT_SECRET;
-    const expiresIn = (JWT_ACCESS_TTL || `15m`) as JwtSignOptions[`expiresIn`];
+    const secret = parsedEnvs.JWT_SECRET;
+    const expiresIn = parsedEnvs.JWT_ACCESS_TTL || `15m`;
     return this.jwt.sign({ sub: user.id, email: user.email, role: user.role }, { secret, expiresIn });
   }
 
   signRefresh(user: Pick<UserEntity, `id`>) {
-    const secret = JWT_REFRESH_SECRET;
-    const expiresIn = (JWT_REFRESH_TTL || `7d`) as JwtSignOptions[`expiresIn`];
+    const secret = parsedEnvs.JWT_REFRESH_SECRET;
+    const expiresIn = parsedEnvs.JWT_REFRESH_TTL || `7d`;
     return this.jwt.sign({ sub: user.id, typ: `refresh` }, { secret, expiresIn });
   }
 
   verifyRefresh(token: string) {
     try {
-      const secret = JWT_REFRESH_SECRET;
+      const secret = parsedEnvs.JWT_REFRESH_SECRET;
       return this.jwt.verify<RefreshTokenPayload>(token, { secret });
     } catch {
       throw new UnauthorizedException(`Invalid refresh`);

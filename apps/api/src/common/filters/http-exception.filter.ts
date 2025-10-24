@@ -1,7 +1,8 @@
 import { ExceptionFilter, Catch, ArgumentsHost, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 
-import { NODE_ENV } from '../../envs';
+import { parsedEnvs } from '@remoola/env';
+
 import { extractApiVersionFromUrl } from '../utils';
 
 @Catch()
@@ -29,7 +30,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       // Handle non-HttpExceptions (e.g., runtime errors)
       errorResponse = {
         message: (exception as any)?.message || `Internal Server Error`,
-        stack: NODE_ENV !== `production` ? (exception as any)?.stack : undefined,
+        stack: parsedEnvs.NODE_ENV !== `production` ? (exception as any)?.stack : undefined,
       };
     }
     const requestId = request.headers[`x-request-id`] ?? crypto.randomUUID();
