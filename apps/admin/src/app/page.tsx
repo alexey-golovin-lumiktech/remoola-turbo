@@ -40,6 +40,7 @@ export default async function AdminDashboard() {
               <p className="font-medium text-gray-900">Invite Admin</p>
               <p className="mt-1 text-sm text-gray-600">Create a new admin.</p>
             </div>
+            {/*  eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a href="/admins" className="btn btn-primary">
               Invite
             </a>

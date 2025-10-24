@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Card, DataTable, Badge } from "@remoola/ui";
 
-import { getJson, patchJson, delJson } from "../../lib/api";
+import { api, HttpError } from "../../lib/api";
 
 type Contract = {
   id: string;
@@ -17,7 +17,15 @@ type Contract = {
 export default function ContractsPage() {
   const [rows, setRows] = useState<Contract[]>([]);
 
-  const load = async () => setRows(await getJson<Contract[]>(`/contracts`));
+  const load = async () => {
+    try {
+      const contracts = await api.contracts.list<Contract[]>();
+      setRows(contracts || []);
+    } catch (error) {
+      if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+      else if (!(error instanceof DOMException)) console.error(error);
+    }
+  };
   useEffect(() => void load(), []);
 
   return (
@@ -64,7 +72,7 @@ export default function ContractsPage() {
                     <select
                       className="rounded border px-2 py-1 text-xs"
                       defaultValue={r.status}
-                      onChange={(e) => patchJson(`/contracts/${r.id}`, { status: e.target.value }).then(load)}
+                      onChange={(e) => api.contracts.patch(r.id, { status: e.target.value }).then(load)}
                     >
                       <option value="draft">draft</option>
                       <option value="signature">signature</option>
@@ -73,7 +81,7 @@ export default function ContractsPage() {
                     </select>
                     <button
                       className="rounded border px-2 py-1 text-xs"
-                      onClick={() => delJson(`/contracts/${r.id}`).then(load)}
+                      onClick={() => api.contracts.delete(r.id).then(load)}
                     >
                       Delete
                     </button>

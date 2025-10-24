@@ -3,14 +3,23 @@ import { useEffect, useState } from "react";
 
 import { Card, DataTable } from "@remoola/ui";
 
-import { getJson, delJson } from "../../lib/api";
+import { api, HttpError } from "../../lib/api";
 
 type Doc = { id: string; name: string; type: string; sizeBytes?: number; updatedAt?: string; fileUrl?: string };
 
 export default function DocumentsPage() {
+  const [search] = useState(``);
   const [rows, setRows] = useState<Doc[]>([]);
 
-  const load = async () => setRows(await getJson<Doc[]>(`/documents`));
+  const load = async () => {
+    try {
+      const documents = await api.documents.search<Doc[]>(encodeURIComponent(search));
+      setRows(documents || []);
+    } catch (error) {
+      if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+      else if (!(error instanceof DOMException)) console.error(error);
+    }
+  };
   useEffect(() => void load(), []);
 
   return (
@@ -50,7 +59,7 @@ export default function DocumentsPage() {
                 render: (d) => (
                   <button
                     className="rounded border px-2 py-1 text-xs"
-                    onClick={() => delJson(`/documents/${d.id}`).then(load)}
+                    onClick={() => api.documents.delete(d.id).then(load)}
                   >
                     Delete
                   </button>

@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-import { getJson } from "../../../lib/api";
+import { api, HttpError } from "../../../lib/api";
 
 type SearchResult = {
   id: string;
@@ -39,13 +39,15 @@ export default function SearchCommand() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const data = await getJson<{ results: SearchResult[] }>(`/global-search?search=${encodeURIComponent(search)}`, {
-          signal: controller.signal,
-        });
+        const data = await api.globalSearch //
+          .search<{ results: SearchResult[] }>(encodeURIComponent(search), {
+            signal: controller.signal,
+          });
 
-        setResults(data.results);
-      } catch (err) {
-        if (!(err instanceof DOMException)) console.error(err);
+        setResults(data?.results || []);
+      } catch (error) {
+        if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+        else if (!(error instanceof DOMException)) console.error(error);
       } finally {
         setLoading(false);
       }
