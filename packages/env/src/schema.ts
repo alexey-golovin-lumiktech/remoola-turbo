@@ -37,7 +37,7 @@ export const envSchema = z.object({
   POSTGRES_USER: z.string().optional().default(`remoola`),
   POSTGRES_PASSWORD: z.string().optional().default(`remoola`),
   POSTGRES_DB: z.string().optional().default(`remoola`),
-  POSTGRES_SSL: z.string().optional(),
+  POSTGRES_SSL: z.string().optional().default('false'),
   COOKIE_SECURE: z.string().optional(),
   SECURE_SESSION_SECRET: z.string().optional().default(`SECURE_SESSION_SECRET`),
   PORT: z.coerce.number().optional().default(3333)

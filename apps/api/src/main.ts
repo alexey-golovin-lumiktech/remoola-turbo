@@ -1,3 +1,5 @@
+import { mkdirSync, writeFileSync } from 'fs';
+
 import { VersioningType } from '@nestjs/common';
 import { type RequestHandler } from '@nestjs/common/interfaces';
 import { NestFactory, Reflector } from '@nestjs/core';
@@ -22,7 +24,6 @@ async function bootstrap() {
   });
   app.setGlobalPrefix(`api`);
   app.set(`query parser`, `extended`);
-  app.setGlobalPrefix(`api`);
   app.use(express.json({ limit: `25mb` }));
   app.use(express.urlencoded({ extended: true, limit: `25mb` }));
   app.use(cookieParser(parsedEnvs.SECURE_SESSION_SECRET));
@@ -59,14 +60,16 @@ async function bootstrap() {
       .setDescription(description)
       .build();
 
-    const doc = SwaggerModule.createDocument(app, config, {
+    const document = SwaggerModule.createDocument(app, config, {
       include: [module, SharedModule], // ✅ this is crucial
       deepScanRoutes: true,
       autoTagControllers: true,
     });
 
-    const json: RequestHandler = (_req, res) => res.send(doc);
+    const json: RequestHandler = (_req, res) => res.send(document);
     app.getHttpAdapter().get(`/api-json/v${version}`, json);
+    mkdirSync(`./dist/api-json`, { recursive: true });
+    writeFileSync(`./dist/api-json/v${version}.json`, JSON.stringify(document, null, 2));
 
     const options: SwaggerCustomOptions = {
       customSiteTitle: title,
@@ -76,7 +79,7 @@ async function bootstrap() {
       ],
       customCssUrl: [`https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/5.1.3/swagger-ui.min.css`],
     };
-    SwaggerModule.setup(`docs/v${version}`, app, doc, options);
+    SwaggerModule.setup(`docs/v${version}`, app, document, options);
   };
 
   versionsConfig.forEach((params) => setupSwagger(params));

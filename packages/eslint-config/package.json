@@ -1,8 +1,9 @@
 {
   "name": "@remoola/eslint-config",
   "version": "0.0.0",
-  "type": "module",
+  "main": "index.js",
   "private": true,
+  "type": "module",
   "exports": {
     "./nest-js": "./nest.js",
     "./next-single-js": "./next-single.js",

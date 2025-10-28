@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "strict": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@remoola/openapi": [
+        "packages/openapi/src",
+        "packages/openapi/dist"
+      ],
+      "@remoola/ui": [
+        "packages/ui/src"
+      ],
+      "@remoola/env": [
+        "packages/env/src"
+      ],
+      "@remoola/eslint-config": [
+        "packages/eslint-config"
+      ]
+    }
+  }
+}

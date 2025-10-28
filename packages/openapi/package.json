@@ -9,15 +9,20 @@
     "dist"
   ],
   "scripts": {
-    "openapi:pull": "mkdir -p src && : ${OPENAPI_URL:=http://127.0.0.1:3333/api-json/v1} && echo \"Fetching $OPENAPI_URL\" && curl -fsSLo src/openapi.json \"$OPENAPI_URL\"",
-    "openapi:gen": "openapi --input src/openapi.json --output src/generated --client fetch --useOptions --useUnionTypes",
-    "openapi": "yarn openapi:pull && yarn openapi:gen",
-    "build": "tsc -p tsconfig.json",
-    "clean": "rimraf dist src/generated src/openapi.json"
+    "openapi:pull": "./scripts/resolve-openapi.sh",
+    "openapi:gen": "if [ -f src/openapi.json ]; then openapi --input src/openapi.json --output src/generated --client fetch --useOptions --useUnionTypes; else echo '⚠️  Skipping generation (no openapi.json)'; fi",
+    "openapi:gen:types": "openapi-typescript src/openapi.json --output src/generated-types.ts",
+    "openapi": "yarn openapi:pull && yarn openapi:gen && yarn openapi:gen:types",
+    "clean": "rimraf dist src/generated src/openapi.json",
+    "build": "yarn run openapi && if [ -n \"$(find src -name '*.ts' -print -quit)\" ]; then tsc -p tsconfig.json; else echo '⚠️  Skipping TS build (no TypeScript sources)'; fi"
+  },
+  "dependencies": {
+    "@remoola/api": "0.0.1"
   },
   "devDependencies": {
+    "openapi-typescript": "^7.10.1",
     "openapi-typescript-codegen": "^0.29.0",
-    "typescript": "^5.5.4",
-    "rimraf": "^5.0.5"
+    "rimraf": "^5.0.5",
+    "typescript": "^5.5.4"
   }
 }

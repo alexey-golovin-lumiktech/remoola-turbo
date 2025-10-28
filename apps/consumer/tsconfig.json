@@ -1,6 +1,7 @@
 {
+  "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2017",
+    "target": "ES2022",
     "lib": [
       "dom",
       "dom.iterable",
@@ -21,7 +22,15 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@remoola/openapi": [
+        "../../packages/openapi/dist"
+      ],
+      "@remoola/ui": [
+        "../../packages/ui/src"
+      ]
+    }
   },
   "include": [
     "next-env.d.ts",
