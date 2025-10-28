@@ -53,8 +53,10 @@
       ],
       "outputs": [
         ".next/**",
-        "dist/**",
-        "build/**"
+        "!.next/cache/**",
+        ".vercel/output/**",
+        ".nuxt/**",
+        "dist/**"
       ]
     },
     "dev": {
