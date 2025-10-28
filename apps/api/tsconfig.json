@@ -24,5 +24,12 @@
     "esModuleInterop": true,
     "allowJs": true,
     "useUnknownInCatchVariables": false,
-  }
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "../../apps/admin",
+    "../../apps/consumer"
+  ]
 }
