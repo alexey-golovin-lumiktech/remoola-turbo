@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "admin": {
+      "source": "apps/admin",
+      "outputDirectory": "apps/admin/.next"
+    },
+    "consumer": {
+      "source": "apps/consumer",
+      "outputDirectory": "apps/consumer/.next"
+    }
+  }
+}
