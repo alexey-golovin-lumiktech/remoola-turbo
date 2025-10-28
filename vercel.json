@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "buildCommand": "yarn install --immutable && turbo run build --filter=...your app...",
-  "installCommand": "yarn install --immutable",
-  "outputDirectory": "apps/admin/.next",
-  "ignoreCommand": "echo 'Using Turborepo cache'"
-}
