@@ -17,7 +17,7 @@
     "build": "yarn run openapi && if [ -n \"$(find src -name '*.ts' -print -quit)\" ]; then tsc -p tsconfig.json; else echo '⚠️  Skipping TS build (no TypeScript sources)'; fi"
   },
   "dependencies": {
-    "@remoola/api": "0.0.1"
+    "@remoola/api": "workspace:*"
   },
   "devDependencies": {
     "openapi-typescript": "^7.10.1",
