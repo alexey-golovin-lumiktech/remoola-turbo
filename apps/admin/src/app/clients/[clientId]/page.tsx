@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { Badge, Card } from "@remoola/ui";
@@ -60,9 +61,9 @@ export default async function ClientPage({ params }: { params: { clientId: strin
             <ul className="list-disc list-inside">
               {client.contracts.map((c: any) => (
                 <li key={c.id}>
-                  <a href={`/contracts/${c.id}`} className="text-blue-600 hover:underline">
+                  <Link href={`/contracts/${c.id}`} className="text-blue-600 hover:underline">
                     {c.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -77,9 +78,9 @@ export default async function ClientPage({ params }: { params: { clientId: strin
             <ul className="list-disc list-inside">
               {client.payments.map((p: any) => (
                 <li key={p.id}>
-                  <a href={`/payments/${p.id}`} className="text-blue-600 hover:underline">
+                  <Link href={`/payments/${p.id}`} className="text-blue-600 hover:underline">
                     {p.reference} – {p.amount} {p.currency}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

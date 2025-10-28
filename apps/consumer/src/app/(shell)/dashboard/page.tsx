@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 import { Card, Badge, Progress as ProgressBar } from "@remoola/ui";
@@ -53,12 +54,12 @@ export default function DashboardPage() {
               <p className="font-medium text-gray-900">Create Contract</p>
               <p className="mt-1 text-sm text-gray-600">Spin up an MSA + SoW in minutes.</p>
             </div>
-            <a
+            <Link
               href="/contracts"
               className="rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow hover:bg-blue-700"
             >
               Create
-            </a>
+            </Link>
           </div>
         </Card>
         <Card>
@@ -125,9 +126,9 @@ export default function DashboardPage() {
         <Card
           title="Quick Docs"
           actions={
-            <a href="/documents" className="text-sm font-medium text-blue-600 hover:underline">
+            <Link href="/documents" className="text-sm font-medium text-blue-600 hover:underline">
               View all
-            </a>
+            </Link>
           }
         >
           <ul className="space-y-2">
