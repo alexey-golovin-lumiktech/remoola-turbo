@@ -10,8 +10,8 @@
     "start": "next start -p 3010"
   },
   "dependencies": {
-    "@remoola/openapi": "workspace:*",
-    "@remoola/ui": "workspace:*",
+    "@remoola/openapi": "^0.1.0",
+    "@remoola/ui": "^0.1.0",
     "next": "15.5.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
@@ -19,7 +19,7 @@
     "zod": "^4.0.17"
   },
   "devDependencies": {
-    "@remoola/eslint-config": "workspace:*",
+    "@remoola/eslint-config": "^0.0.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
