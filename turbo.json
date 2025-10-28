@@ -28,37 +28,51 @@
     "SECURE_SESSION_SECRET",
     "PORT"
   ],
+  "globalDependencies": [
+    "package.json",
+    "yarn.lock",
+    ".env",
+    ".env.*"
+  ],
   "tasks": {
-    "dev": {
-      "cache": false,
-      "persistent": true
+    "clean": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": [
+        "^typecheck"
+      ],
+      "outputs": []
     },
     "build": {
       "dependsOn": [
         "^build"
       ],
       "outputs": [
-        "dist/**",
         ".next/**",
+        "dist/**",
         "build/**"
       ]
     },
-    "start": {
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "test": {
       "dependsOn": [
         "build"
-      ]
-    },
-    "lint": {},
-    "openapi": {
-      "dependsOn": [
-        "^build"
       ],
-      "cache": false,
       "outputs": [
-        "packages/openapi/src/generated/**"
+        "coverage/**"
       ]
     },
-    "clean": {
+    "deploy": {
+      "dependsOn": [
+        "build"
+      ],
       "cache": false
     }
   }
