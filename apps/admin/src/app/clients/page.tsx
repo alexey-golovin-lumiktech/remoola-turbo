@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Card, DataTable } from "@remoola/ui";
 
-import { getJson, patchJson } from "../../lib/api";
+import { api, HttpError } from "../../lib/api";
 
 type User = { id: string; email: string; name: string; role: `client` | `admin` | `superadmin` };
 
@@ -12,10 +12,14 @@ export default function ClientsPage() {
   const [search, setSearch] = useState(``);
 
   const load = async () => {
-    const data = await getJson<User[]>(`/admin/clients${search ? `?search=${encodeURIComponent(search)}` : ``}`);
-    setRows(data);
+    try {
+      const clients = await api.clients.search<User[]>(encodeURIComponent(search));
+      setRows(clients || []);
+    } catch (error) {
+      if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+      else if (!(error instanceof DOMException)) console.error(error);
+    }
   };
-
   useEffect(() => void load(), [search]);
 
   return (
@@ -47,7 +51,11 @@ export default function ClientsPage() {
                   <select
                     className="rounded border px-2 py-1 text-sm"
                     value={u.role}
-                    onChange={(e) => patchJson(`/admin/users/${u.id}/role`, { role: e.target.value }).then(load)}
+                    onChange={(e) =>
+                      api.users //
+                        .patch(u.id, { role: e.target.value } as Pick<User, `role`>)
+                        .then(load)
+                    }
                   >
                     <option value="client">client</option>
                     <option value="admin">admin</option>

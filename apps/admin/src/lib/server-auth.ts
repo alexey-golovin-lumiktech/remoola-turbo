@@ -1,6 +1,14 @@
 import { cookies as nextCookies } from 'next/headers';
+type R = { id: string; email: string; role: `client` | `admin` | `superadmin` };
+type BackendResponse<T> = {
+  requestId: string
+  timestamp: string
+  path: string
+  data: T
+  version: string
+}
 
-export async function getMeSSR() {
+export async function getMeSSR<T = R>() {
   const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
 
   const cookieStore = await nextCookies();
@@ -15,9 +23,6 @@ export async function getMeSSR() {
   });
 
   if (!res.ok) return null;
-  return (await res.json()) as {
-    id: string;
-    email: string;
-    role: `client` | `admin` | `superadmin`;
-  };
+  const json: BackendResponse<T> = await res.json()
+  return json.data
 }

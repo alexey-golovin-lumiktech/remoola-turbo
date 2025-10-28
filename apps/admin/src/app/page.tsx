@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Card, Badge, Progress } from "@remoola/ui";
 
 import Shell from "./(shell)/layout";
@@ -40,9 +42,9 @@ export default async function AdminDashboard() {
               <p className="font-medium text-gray-900">Invite Admin</p>
               <p className="mt-1 text-sm text-gray-600">Create a new admin.</p>
             </div>
-            <a href="/admins" className="btn btn-primary">
+            <Link href="/admins" className="btn btn-primary">
               Invite
-            </a>
+            </Link>
           </div>
         </Card>
         <Card>
@@ -52,9 +54,9 @@ export default async function AdminDashboard() {
               <p className="font-medium text-gray-900">Review Flags</p>
               <p className="mt-1 text-sm text-gray-600">Triage open compliance items.</p>
             </div>
-            <a href="/documents" className="btn btn-primary">
+            <Link href="/documents" className="btn btn-primary">
               Open
-            </a>
+            </Link>
           </div>
         </Card>
       </section>

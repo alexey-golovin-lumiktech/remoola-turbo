@@ -12,19 +12,19 @@ export default function LoginForm({ nextPath }: { nextPath: string }) {
     setErr(undefined);
 
     const base = process.env.NEXT_PUBLIC_API_BASE_URL!;
-    const r = await fetch(`${base}/auth/login`, {
+    const loginRequest = await fetch(`${base}/auth/login`, {
       method: `POST`,
       credentials: `include`,
       headers: { "Content-Type": `application/json` },
       body: JSON.stringify({ email, password }),
     });
-    if (!r.ok) {
-      setErr(`Login failed (${r.status})`);
+    if (!loginRequest.ok) {
+      setErr(`Login failed (${loginRequest.status})`);
       return;
     }
 
-    const me = await fetch(`${base}/auth/me`, { credentials: `include`, cache: `no-store` });
-    if (!me.ok) {
+    const meRequest = await fetch(`${base}/auth/me`, { credentials: `include`, cache: `no-store` });
+    if (!meRequest.ok) {
       setErr(`Logged in, but cookies not available (CORS/cookie attrs?).`);
       return;
     }

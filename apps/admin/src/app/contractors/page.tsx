@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Card, DataTable } from "@remoola/ui";
 
-import { delJson, getJson, patchJson, postJson } from "../../lib/api";
+import { api, HttpError } from "../../lib/api";
 
 type Contractor = { id: string; name: string; email?: string; phone?: string };
 
@@ -13,12 +13,15 @@ export default function ContractorsPage() {
   const [name, setName] = useState(``);
 
   const load = async () => {
-    setRows(await getJson<Contractor[]>(`/admin/contractors${search ? `?search=${encodeURIComponent(search)}` : ``}`));
+    try {
+      const contractors = await api.contractors.search<Contractor[]>(encodeURIComponent(search));
+      setRows(contractors || []);
+    } catch (error) {
+      if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+      else if (!(error instanceof DOMException)) console.error(error);
+    }
   };
-
-  useEffect(() => {
-    load();
-  }, [search]);
+  useEffect(() => void load(), [search]);
 
   return (
     <>
@@ -45,7 +48,7 @@ export default function ContractorsPage() {
                 className="rounded-xl bg-blue-600 px-3 py-2 text-sm text-white"
                 onClick={async () => {
                   if (!name.trim()) return;
-                  await postJson(`/admin/contractors`, { name });
+                  await api.contractors.create({ name });
                   setName(``);
                   load();
                 }}
@@ -66,7 +69,7 @@ export default function ContractorsPage() {
                   <input
                     defaultValue={c.name}
                     className="rounded border px-2 py-1 text-sm"
-                    onBlur={(e) => patchJson(`/admin/contractors/${c.id}`, { name: e.target.value })}
+                    onBlur={(e) => api.contractors.patch(c.id, { name: e.target.value })}
                   />
                 ),
               },
@@ -78,7 +81,7 @@ export default function ContractorsPage() {
                 render: (c) => (
                   <button
                     className="rounded border px-2 py-1 text-xs"
-                    onClick={() => delJson(`/admin/contractors/${c.id}`).then(load)}
+                    onClick={() => api.contractors.delete(c.id).then(load)}
                   >
                     Delete
                   </button>

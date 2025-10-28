@@ -2,22 +2,23 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { Dashboard } from '../models/Dashboard';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class DashboardService {
     /**
-     * @returns any
+     * @returns Dashboard
      * @throws ApiError
      */
-    public static dashboardControllerGet({
+    public static dashboardControllerGetV1({
         clientId,
     }: {
         clientId: string,
-    }): CancelablePromise<any> {
+    }): CancelablePromise<Dashboard> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/dashboard',
+            url: '/api/v1/consumer/dashboard',
             query: {
                 'clientId': clientId,
             },

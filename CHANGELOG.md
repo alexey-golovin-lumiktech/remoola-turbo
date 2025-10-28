@@ -24,3 +24,23 @@
 -   **2025-09-26:** Continued development of role-based management.
 -   **2025-09-29:** Continued development of role-based management.
 -   **2025-09-30:** Continued development of role-based management.
+
+# Changelog (October 2025)
+
+-   **2025-10-02:** Increased monorepo stability; fixed module import issues and improved concurrent dev experience.
+-   **2025-10-03:** Implemented role-based access control: superadmins manage admins/clients, admins manage clients only.
+-   **2025-10-06:** Added unified global search service across entities with optimized SQL and simplified payloads.
+-   **2025-10-07:** Introduced `v1` versioned routing for admin and consumer APIs; reorganized module structure.
+-   **2025-10-08:** Implemented `/v1/admin/clients/:clientId` backend endpoints for detailed client lookup.
+-   **2025-10-09:** Upgraded OpenAPI spec to `v1` with enhanced schemas and versioned endpoints.
+-   **2025-10-10:** Standardized all admin routes under `/admin/admins`.
+-   **2025-10-13:** Unified API documentation and Swagger with version switching; improved visibility across all modules.
+-   **2025-10-14:** Split monolithic `AdminService` into modular domain-specific services for admins, clients, payments, etc.
+-   **2025-10-15:** Improved developer tooling by creating shared ESLint config and fixing Turborepo workspace issues.
+-   **2025-10-16:** Refactored API client to use relative path prefixes for better environment portability.
+-   **2025-10-17:** Implemented versioned IndexedDB wrapper for offline caching with schema migrations and auto-cleanup.
+-   **2025-10-20:** Rebuilt API client with caching, SWR, retries, and concurrency limiting; added dependency-based invalidation.
+-   **2025-10-21:** Simplified global search return value by removing unnecessary wrapper objects.
+-   **2025-10-22:** Added admin-facing pages for managing clients with search and filtering integrated into new API.
+-   **2025-10-23:** Introduced shared `@remoola/env` package for centralized environment configuration using Zod validation.
+-   **2025-10-24:** Replaced local `.env` loaders across apps with unified `@remoola/env` import; removed redundant logic.

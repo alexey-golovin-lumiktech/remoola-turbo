@@ -12,14 +12,14 @@ export class PaymentsService {
      * @returns any
      * @throws ApiError
      */
-    public static paymentsControllerList({
+    public static paymentsControllerListV1({
         clientId,
     }: {
         clientId: string,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/api/payments',
+            url: '/api/v1/consumer/payments',
             query: {
                 'clientId': clientId,
             },
@@ -29,14 +29,14 @@ export class PaymentsService {
      * @returns any
      * @throws ApiError
      */
-    public static paymentsControllerStart({
+    public static paymentsControllerStartV1({
         requestBody,
     }: {
         requestBody: StartPayment,
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/api/payments',
+            url: '/api/v1/consumer/payments',
             body: requestBody,
             mediaType: 'application/json',
         });
@@ -45,7 +45,7 @@ export class PaymentsService {
      * @returns any
      * @throws ApiError
      */
-    public static paymentsControllerPatch({
+    public static paymentsControllerPatchV1({
         id,
         requestBody,
     }: {
@@ -54,7 +54,7 @@ export class PaymentsService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
-            url: '/api/payments/{id}/status',
+            url: '/api/v1/consumer/payments/{id}/status',
             path: {
                 'id': id,
             },

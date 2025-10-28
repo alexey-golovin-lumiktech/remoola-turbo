@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { Card, DataTable, Badge } from "@remoola/ui";
 
-import { getJson, delJson } from "../../lib/api";
+import { api, HttpError } from "../../lib/api";
 
 type Pay = {
   id: string;
@@ -14,10 +14,17 @@ type Pay = {
 
 export default function PaymentsPage() {
   const [rows, setRows] = useState<Pay[]>([]);
-  const load = async () => setRows(await getJson<Pay[]>(`/admin/payments`));
-  useEffect(() => {
-    load();
-  }, []);
+
+  const load = async () => {
+    try {
+      const payments = await api.payments.list<Pay[]>();
+      setRows(payments || []);
+    } catch (error) {
+      if (error instanceof HttpError) console.error(`Request failed`, error.status, error.body);
+      else if (!(error instanceof DOMException)) console.error(error);
+    }
+  };
+  useEffect(() => void load(), []);
 
   return (
     <>
@@ -49,7 +56,7 @@ export default function PaymentsPage() {
                 render: (p) => (
                   <button
                     className="rounded border px-2 py-1 text-xs"
-                    onClick={() => delJson(`/admin/payments/${p.id}`).then(load)}
+                    onClick={() => api.payments.delete(p.id).then(load)}
                   >
                     Delete
                   </button>
