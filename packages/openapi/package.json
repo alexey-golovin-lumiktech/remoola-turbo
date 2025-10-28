@@ -12,7 +12,7 @@
     "openapi:pull": "./scripts/resolve-openapi.sh",
     "openapi:gen": "if [ -f src/openapi.json ]; then openapi --input src/openapi.json --output src/generated --client fetch --useOptions --useUnionTypes; else echo '⚠️  Skipping generation (no openapi.json)'; fi",
     "openapi:gen:types": "openapi-typescript src/openapi.json --output src/generated-types.ts",
-    "openapi": "yarn openapi:pull && yarn openapi:gen && yarn openapi:gen:types",
+    "openapi": "echo \"yarn openapi:pull && yarn openapi:gen && yarn openapi:gen:types\"",
     "clean": "rimraf dist src/generated src/openapi.json",
     "build": "yarn run openapi && if [ -n \"$(find src -name '*.ts' -print -quit)\" ]; then tsc -p tsconfig.json; else echo '⚠️  Skipping TS build (no TypeScript sources)'; fi"
   },

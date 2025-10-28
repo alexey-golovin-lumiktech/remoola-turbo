@@ -52,7 +52,8 @@
     "rxjs": "^7.8.1",
     "swagger-ui-express": "^5.0.1",
     "typeorm": "^0.3.26",
-    "zod": "^4.0.17"
+    "zod": "^4.0.17",
+    "@remoola/env": "^1.0.0"
   },
   "devDependencies": {
     "@remoola/eslint-config": "^0.0.0",
